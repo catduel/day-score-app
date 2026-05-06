@@ -3,6 +3,8 @@ workflows:
     name: My Day Point iOS
     instance_type: mac_mini_m2
     max_build_duration: 60
+    integrations:
+      app_store_connect: App Store Connect
     environment:
       node: latest
       xcode: latest
