@@ -1,6 +1,6 @@
 {
-  "name": "What's Your Day Score?",
-  "short_name": "Day Score",
+  "name": "My Day Point",
+  "short_name": "My Day Point",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#070d24",

@@ -1,8 +1,8 @@
 {
-  "name": "day-score-app",
+  "name": "my-day-point",
   "version": "0.1.0",
   "private": true,
-  "description": "What's Your Day Score mobile app prototype.",
+  "description": "My Day Point mobile app prototype.",
   "scripts": {
     "build": "node scripts/prepare-www.mjs",
     "cap:add:ios": "npm run build && npx cap add ios",

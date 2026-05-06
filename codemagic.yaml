@@ -1,6 +1,6 @@
 workflows:
   ios-capacitor:
-    name: Day Score iOS
+    name: My Day Point iOS
     instance_type: mac_mini_m2
     max_build_duration: 60
     environment:

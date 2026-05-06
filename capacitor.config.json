@@ -1,6 +1,6 @@
 {
   "appId": "com.ismoztas.dayscore",
-  "appName": "Day Score",
+  "appName": "My Day Point",
   "webDir": "www",
   "bundledWebRuntime": false,
   "ios": {
