@@ -1,0 +1,19 @@
+{
+  "name": "day-score-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "What's Your Day Score mobile app prototype.",
+  "scripts": {
+    "build": "node scripts/prepare-www.mjs",
+    "cap:add:ios": "npm run build && npx cap add ios",
+    "cap:sync:ios": "npm run build && npx cap sync ios",
+    "serve": "python -m http.server 4177 --bind 127.0.0.1"
+  },
+  "dependencies": {
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0"
+  }
+}

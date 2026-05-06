@@ -1,0 +1,10 @@
+{
+  "appId": "com.dayscore.app",
+  "appName": "Day Score",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "ios": {
+    "contentInset": "automatic",
+    "allowsLinkPreview": false
+  }
+}

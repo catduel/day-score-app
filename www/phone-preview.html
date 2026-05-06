@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Day Score Phone Preview</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at 20% 10%, rgba(255, 111, 168, .16), transparent 28rem),
+          radial-gradient(circle at 82% 14%, rgba(125, 86, 255, .22), transparent 30rem),
+          linear-gradient(135deg, #050816, #07102a 58%, #111331);
+        font-family: Inter, system-ui, sans-serif;
+      }
+
+      .stage {
+        display: grid;
+        gap: 14px;
+        justify-items: center;
+        padding: 24px;
+      }
+
+      .device {
+        width: 390px;
+        height: 844px;
+        padding: 12px;
+        border-radius: 48px;
+        background: #050713;
+        border: 1px solid rgba(179, 191, 255, .28);
+        box-shadow: 0 35px 110px rgba(0, 0, 0, .55);
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border: 0;
+        border-radius: 36px;
+        background: #060b20;
+      }
+
+      .hint {
+        color: rgba(255, 248, 236, .72);
+        font-size: 13px;
+      }
+
+      @media (max-width: 460px) {
+        body {
+          display: block;
+          overflow: hidden;
+        }
+
+        .stage {
+          padding: 0;
+        }
+
+        .hint {
+          display: none;
+        }
+
+        .device {
+          width: 100vw;
+          height: 100dvh;
+          padding: 0;
+          border: 0;
+          border-radius: 0;
+        }
+
+        iframe {
+          border-radius: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="stage">
+      <div class="device">
+        <iframe id="previewFrame" src="./index.html" title="Day Score iPhone preview"></iframe>
+      </div>
+      <div class="hint">Chrome'da telefon gibi test etmek icin bu sayfayi kullan.</div>
+    </main>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const screen = params.get("screen");
+      const score = params.get("score");
+      const invite = params.get("invite");
+      const appParams = new URLSearchParams();
+      if (score) appParams.set("score", score);
+      if (invite) appParams.set("invite", invite);
+      const query = appParams.toString();
+      if (screen || query) {
+        document.querySelector("#previewFrame").src = `./index.html${query ? `?${query}` : ""}${screen ? `#${screen}` : ""}`;
+      }
+      if (invite) {
+        params.delete("invite");
+        const cleanQuery = params.toString();
+        window.history.replaceState({}, "", `${window.location.pathname}${cleanQuery ? `?${cleanQuery}` : ""}${window.location.hash}`);
+      }
+    </script>
+  </body>
+</html>

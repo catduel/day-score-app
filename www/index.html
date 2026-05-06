@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <title>What's Your Day Score?</title>
+    <meta name="theme-color" content="#090f28" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="showcase" aria-label="What's Your Day Score high fidelity mobile app mockup">
+      <section class="phone intro" id="intro">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <div class="intro-title">
+          <div class="app-icon image-icon logo-entry"><img src="./assets/logo-entry-crop.png" alt="" /></div>
+          <div>
+            <h1>What's<br />Your Day<br />Score?</h1>
+            <p>Rate your day between 1-10 and see yourself and your friends.</p>
+          </div>
+        </div>
+        <div class="feature-list">
+          <article><i class="ico bell"></i><div><strong>Daily Reminder</strong><p>Choose the time your day usually ends.</p></div></article>
+          <article><i class="ico people"></i><div><strong>Friends & Groups</strong><p>Create your own groups and share your scores.</p></div></article>
+          <article><i class="ico bars"></i><div><strong>Weekly Analytics</strong><p>Track your average score, trends and progress.</p></div></article>
+          <article><i class="ico lock"></i><div><strong>Private Sharing</strong><p>Share with selected friends or just yourself.</p></div></article>
+        </div>
+        <div class="note">This is not a mood tracker. It's a complete score-based self-evaluation system.</div>
+        <small class="intro-signup">New here? <b data-screen="signup">Sign Up</b></small>
+      </section>
+
+      <section class="phone welcome" id="welcome">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <div class="meteor"></div>
+        <h2>What's<br />Your Day<br />Score?</h2>
+        <p>Give your day a score,<br />see your progress.</p>
+        <img class="hero-art big" src="./assets/home-hero.jpg" alt="" />
+        <button class="btn primary" data-screen="intro">Let's Get Started</button>
+        <button class="btn ghost" data-screen="login">Log In</button>
+      </section>
+
+      <section class="phone auth" id="signup">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <header class="top"><button data-screen="intro">&lt;</button><h3>Sign Up</h3></header>
+        <div class="app-icon large image-icon balloon-icon"><img src="./assets/balloon-final.png" alt="" /></div>
+        <form class="fields">
+          <label><i class="ico user"></i><input placeholder="Full Name" /></label>
+          <label><i class="ico mail"></i><input placeholder="Email" /></label>
+          <label><i class="ico lock small"></i><input type="password" placeholder="Password" /></label>
+          <label><i class="ico lock small"></i><input type="password" placeholder="Confirm Password" /></label>
+        </form>
+        <button id="signupButton" class="btn primary" type="button">Sign Up</button>
+        <div class="divider"><span>or</span></div>
+        <div class="social"><button>G</button><button>A</button><button>@</button></div>
+        <small>Already have an account? <b data-screen="login">Log In</b></small>
+      </section>
+
+      <section class="phone auth" id="login">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <header class="top"><button data-screen="intro">&lt;</button><h3>Log In</h3></header>
+        <img class="door-art" src="./assets/login-door.jpg" alt="" />
+        <form class="fields compact">
+          <label><i class="ico mail"></i><input placeholder="Email" /></label>
+          <label><i class="ico lock small"></i><input type="password" placeholder="Password" /></label>
+        </form>
+        <div class="form-row"><label><input id="rememberMe" type="checkbox" /> Remember me</label><a>Forgot password?</a></div>
+        <button id="loginButton" class="btn primary" type="button">Log In</button>
+        <div class="divider"><span>or</span></div>
+        <div class="social"><button>G</button><button>A</button><button>@</button></div>
+        <small>Don't have an account? <b data-screen="signup">Sign Up</b></small>
+      </section>
+
+      <section class="phone app home" id="home">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <header class="home-head"><div><h3>Hey, <span id="userName">there</span>!</h3><p>How was your day? Let's see your score.</p></div><button class="round">o</button></header>
+        <button class="orb" data-screen="rating"><span>Today's Score</span><strong id="homeScore">--</strong><em>Tap to give<br />your score</em></button>
+        <article class="glass streak-card"><i></i><div><span>Current Streak</span><strong id="homeStreak">0 days</strong><small>Keep the chain alive</small></div></article>
+        <img class="hero-art small" src="./assets/home-hero.jpg" alt="" />
+        <article class="glass friends"><div class="card-head"><strong>Friends</strong><a data-screen="groups">See All ></a></div><div id="homeFriendsList" class="empty-state">No friends yet.</div></article>
+        <article class="glass quote">Every day is a new chance to be better.</article>
+        <nav class="nav"><button class="active" data-screen="home"><i>home</i>Home</button><button data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+      </section>
+
+      <section class="phone app rating" id="rating">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <div class="chip">End-of-day check-in<br /><small id="ratingReminderText">Score when your day is done.</small></div>
+        <div class="today-date" id="todayDate">Today</div>
+        <h3>What's your day score?</h3>
+        <div class="wheel score-dial" id="scoreDial">
+          <svg class="score-progress" viewBox="0 0 216 216" aria-hidden="true">
+            <circle class="score-track" cx="108" cy="108" r="84" pathLength="100" />
+            <circle class="score-fill" id="scoreFill" cx="108" cy="108" r="84" pathLength="100" />
+          </svg>
+          <button style="--a:-90deg" data-score="0">0</button><button style="--a:-57.3deg" data-score="1">1</button><button style="--a:-24.6deg" data-score="2">2</button><button style="--a:8.1deg" data-score="3">3</button><button style="--a:40.9deg" data-score="4">4</button><button style="--a:73.6deg" data-score="5">5</button><button style="--a:106.3deg" data-score="6">6</button><button style="--a:139.1deg" data-score="7">7</button><button style="--a:171.8deg" data-score="8">8</button><button style="--a:204.5deg" data-score="9">9</button><button class="selected" style="--a:237.3deg" data-score="10">10</button>
+          <div class="cloud"><img src="./assets/score-cloud.jpg" alt="" /><small>Select score</small></div>
+        </div>
+        <label class="glass reason"><span>Why did you give this score? <small>(Max. 180 characters)</small></span><textarea id="reason" maxlength="180" placeholder="Give a short reason..."></textarea><em id="count">0/180</em></label>
+        <button class="btn primary" id="save">Save</button>
+        <div class="horizon"></div>
+        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button data-screen="groups"><i>users</i>Groups</button><button class="plus active" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+      </section>
+
+      <section class="phone app after" id="after">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <img class="score-display-art" src="./assets/score-display.jpg" alt="" />
+        <div class="confetti"></div>
+        <h3>Great!</h3>
+        <p>Today's Score</p>
+        <div class="score-ring" id="finalScore">8</div>
+        <article class="glass result"><strong>Why did you give this score?</strong><p id="finalReason">It was a productive and energetic day. I completed important tasks and had time for myself.</p><em>132/180</em></article>
+        <article class="today"><h4>Friends' Scores Today</h4><div class="empty-state">No shared friend scores yet.</div></article>
+        <div class="share"><button class="btn gold">Share</button><button class="circle">up</button></div>
+        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+      </section>
+
+      <section class="phone app analytics" id="analytics">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <header class="top"><button data-screen="home">&lt;</button><h3>Weekly Analytics</h3></header>
+        <div class="date" id="analyticsDate">This Week</div>
+        <article class="glass chart"><img class="chart-bg" src="./assets/houses.jpg" alt="" /><span>Weekly Average</span><strong id="weeklyAverage">--</strong><svg viewBox="0 0 300 140"><g class="axis-labels"><text x="10" y="19">10</text><text x="16" y="66">5</text><text x="16" y="116">0</text></g><path d="M46 16H270M46 64H270M46 112H270" class="grid" /><path d="M46 16V112H270" class="axis" /><g id="scoreBars"></g><polyline id="scoreLine" points="" /><g id="scoreDots"></g></svg><div class="days" id="chartDays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div></article>
+        <div class="stats"><article><span>Highest Score</span><b id="highestScore">--</b><small id="highestDay">No data yet</small></article><article><span>Lowest Score</span><b id="lowestScore">--</b><small id="lowestDay">No data yet</small></article><article><span>Total Score</span><b id="totalScore">0</b></article><article><span>Days Scored</span><b id="daysScored">0</b></article></div>
+        <article class="glass calendar-card"><div class="card-head"><strong>Score Calendar</strong><a id="calendarMonth">This week</a></div><div class="score-calendar" id="scoreCalendar"></div></article>
+        <article class="glass reflection"><strong>Weekly Reflection</strong><p id="weeklyReflection">Score a few days to see your weekly reflection.</p></article>
+        <article class="glass archive" id="openArchiveButton"><div class="card-head"><strong>Score Archive</strong><a id="archiveCount">0 saved</a></div><div id="archiveList" class="archive-preview"><strong>Open calendar</strong><span>Tap to see every saved score.</span></div></article>
+        <div class="archive-modal" id="archiveModal" aria-hidden="true">
+          <div class="archive-modal-card">
+            <button class="modal-close" id="closeArchiveModal" type="button">x</button>
+            <div class="card-head"><strong>Score Archive</strong><a id="archiveModalMonth">May 2026</a></div>
+            <div id="archiveModalCalendar" class="archive-calendar"><div class="empty-state">No scores saved yet.</div></div>
+            <div class="score-popover" id="scorePopover" aria-hidden="true">
+              <button id="closeScorePopover" type="button">x</button>
+              <span id="popoverDate">Score day</span>
+              <strong id="popoverScore">--</strong>
+              <p id="popoverReason">No note written.</p>
+            </div>
+          </div>
+        </div>
+        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button class="active" data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+      </section>
+
+      <section class="phone app groups" id="groups">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <header class="top"><button data-screen="home">&lt;</button><h3>Groups</h3><button id="createGroupShortcut">+</button></header>
+        <article class="glass group-actions">
+          <label><span>Create Group</span><input id="groupName" placeholder="Group name" /></label>
+          <button class="btn gold" id="createGroupButton">Create</button>
+          <label><span>Invite Link</span><input id="inviteLink" placeholder="Create a group first" readonly /></label>
+          <button class="btn ghost compact-btn" id="inviteFriendButton">Share</button>
+        </article>
+        <div class="group-list" id="groupList">
+          <article class="glass group empty-group"><div><strong>No groups yet</strong><small>Create your first private group.</small></div><p>Avg. Score <b>--</b></p></article>
+        </div>
+        <article class="glass rivalry-card social-command" id="rivalryCard">
+          <i class="social-icon vs"></i>
+          <div><strong>Social Pulse</strong><p>Invite friends and compare today's score.</p></div>
+          <b>VS</b>
+        </article>
+        <article class="glass weekly-board">
+          <div class="board-title"><i class="social-icon crown"></i><div><strong>Weekly Leaderboard</strong><small id="leaderboardCount">0 players</small></div></div>
+          <ol class="mini-leaderboard" id="weeklyLeaderboard">
+            <li class="empty-state">Invite friends to unlock weekly competition.</li>
+          </ol>
+        </article>
+        <div class="social-tiles">
+          <article class="glass privacy"><i class="social-icon lock"></i><strong>Private</strong><span>Invite only</span></article>
+          <article class="glass friend-score" id="friendScorePanel"><i class="social-icon score"></i><strong>Friend Score</strong><span>No shared score</span></article>
+        </div>
+        <img class="groups-art" src="./assets/air-balloon.jpg" alt="" />
+        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button class="active" data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+      </section>
+
+      <section class="phone app leaderboard" id="leaderboard">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <header class="top"><button data-screen="groups">&lt;</button><div><h3>University Friends</h3><small>5 members</small></div><button>o</button></header>
+        <div class="tabs"><button>This Week</button><button>All Time</button></div>
+        <ol class="rank"><li><span><b>B</b>Buse</span><strong>9.2</strong></li><li class="you"><span><b>Y</b>You</span><strong>7.8</strong></li><li><span><b>D</b>Deniz</span><strong>7.6</strong></li><li><span><b>C</b>Cem</span><strong>6.4</strong></li><li><span><b>A</b>Alper</span><strong>5.8</strong></li></ol>
+        <button class="btn primary share-group">Share Group</button>
+        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button class="active" data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+      </section>
+
+      <section class="phone app profile" id="profile">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <header class="top"><button data-screen="home">&lt;</button><h3>Profile</h3><button>o</button></header>
+        <article class="glass profile-card">
+          <label class="avatar" for="profilePhotoInput"><img id="profilePhoto" alt="" /><span id="profileInitial">U</span></label>
+          <input id="profilePhotoInput" type="file" accept="image/*" hidden />
+          <div><strong id="profileName">there</strong><span id="profileEmail">No email yet</span></div>
+        </article>
+        <div class="profile-stats">
+          <article><span>Average</span><b id="profileAverage">--</b></article>
+          <article><span>Scores</span><b id="profileScores">0</b></article>
+          <article><span>Streak</span><b id="profileStreak">0</b></article>
+        </div>
+        <article class="glass profile-panel">
+          <strong>Account</strong>
+          <p>Your daily score archive, groups, and private sharing settings will live here.</p>
+        </article>
+        <article class="glass profile-panel">
+          <strong>Privacy</strong>
+          <p>Scores stay private unless you share them with selected friends or groups.</p>
+        </article>
+        <article class="glass subscription-card">
+          <div><strong>7 days free</strong><p>Then lifetime access with one-time payment.</p></div><b>$2.99</b>
+        </article>
+        <div class="legal-links">
+          <button id="privacyPolicyButton">Privacy Policy</button>
+          <button id="termsButton">Terms of Use</button>
+        </div>
+        <article class="glass reminder-card">
+          <label><span>Reminder Time</span><input id="reminderTime" type="time" value="20:00" /></label>
+          <button class="btn gold reminder-btn" id="enableReminderButton">Enable Reminder</button>
+        </article>
+        <small class="reminder-status" id="reminderStatus">Reminder is off.</small>
+        <div class="account-actions">
+          <button class="btn ghost" id="logoutButton">Log Out</button>
+          <button class="btn danger" id="deleteAccountButton">Delete Account</button>
+        </div>
+        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button class="active" data-screen="profile"><i>user</i>Profile</button></nav>
+      </section>
+
+      <section class="how">
+        <h2>How Does It Work?</h2>
+        <div class="steps">
+          <article><i class="ico clock"></i><p>Pick your own end-of-day reminder time.</p></article>
+          <article><i class="ico star"></i><p>Give your day a score from 1-10.</p></article>
+          <article><i class="ico pen"></i><p>Write the reason in 180 characters or less.</p></article>
+          <article><i class="ico people"></i><p>Share with friends if you want.</p></article>
+          <article><i class="ico bars"></i><p>Track your weekly analytics and progress.</p></article>
+        </div>
+        <img class="how-art" src="./assets/how-it-works.jpg" alt="" />
+      </section>
+    </main>
+    <script src="./supabase-config.js"></script>
+    <script src="./supabase-client.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

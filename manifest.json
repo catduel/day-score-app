@@ -1,0 +1,15 @@
+{
+  "name": "What's Your Day Score?",
+  "short_name": "Day Score",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#070d24",
+  "theme_color": "#090f28",
+  "icons": [
+    {
+      "src": "assets/logo-entry-crop.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
