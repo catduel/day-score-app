@@ -30,6 +30,8 @@ workflows:
           fi
       - name: Sync Capacitor iOS
         script: npx cap sync ios
+      - name: Generate iOS app icon and splash
+        script: npm run assets:ios
       - name: Install CocoaPods
         script: |
           cd ios/App

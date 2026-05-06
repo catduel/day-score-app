@@ -5,6 +5,7 @@
   "description": "My Day Point mobile app prototype.",
   "scripts": {
     "build": "node scripts/prepare-www.mjs",
+    "assets:ios": "npx @capacitor/assets generate --ios --assetPath assets --iconBackgroundColor '#090f28' --splashBackgroundColor '#090f28'",
     "cap:add:ios": "npm run build && npx cap add ios",
     "cap:sync:ios": "npm run build && npx cap sync ios",
     "serve": "python -m http.server 4177 --bind 127.0.0.1"
@@ -14,6 +15,7 @@
     "@capacitor/ios": "^7.0.0"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^7.0.0"
   }
 }
