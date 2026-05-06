@@ -64,6 +64,10 @@ const reminderTimeInput = document.querySelector("#reminderTime");
 const ratingReminderText = document.querySelector("#ratingReminderText");
 const privacyPolicyButton = document.querySelector("#privacyPolicyButton");
 const termsButton = document.querySelector("#termsButton");
+const legalModal = document.querySelector("#legalModal");
+const closeLegalModal = document.querySelector("#closeLegalModal");
+const legalTitle = document.querySelector("#legalTitle");
+const legalBody = document.querySelector("#legalBody");
 const logoutButton = document.querySelector("#logoutButton");
 const deleteAccountButton = document.querySelector("#deleteAccountButton");
 const homeStreak = document.querySelector("#homeStreak");
@@ -866,12 +870,47 @@ profilePhotoInput?.addEventListener("change", () => {
   reader.readAsDataURL(file);
 });
 
-privacyPolicyButton?.addEventListener("click", () => {
-  alert("Privacy Policy: Scores are private by default. Shared scores are only visible to selected friends or groups.");
-});
+const legalCopy = {
+  privacy: {
+    title: "Privacy Policy",
+    body: [
+      "My Day Point stores your account profile, daily scores, notes, groups, invite codes, reminder preference, and optional profile photo.",
+      "Your scores are private by default. Shared scores are visible only inside groups you join or create.",
+      "Authentication and app data are handled through Supabase. We do not sell personal data.",
+      "You can log out or request account deletion from the Profile screen."
+    ]
+  },
+  terms: {
+    title: "Terms of Use",
+    body: [
+      "My Day Point is a personal daily self-evaluation tool, not a medical, therapy, or mood diagnosis service.",
+      "The app includes a 7-day free trial. After that, lifetime access may be offered as a one-time purchase.",
+      "You are responsible for the notes and scores you choose to share with invited friends or groups.",
+      "By using the app, you agree to use it lawfully and not misuse invite links, groups, or shared content."
+    ]
+  }
+};
 
-termsButton?.addEventListener("click", () => {
-  alert("Terms of Use: 7 days free, then optional lifetime access with a one-time payment.");
+function openLegal(type) {
+  const copy = legalCopy[type];
+  if (!copy || !legalModal || !legalTitle || !legalBody) return;
+  legalTitle.textContent = copy.title;
+  legalBody.innerHTML = copy.body.map((paragraph) => `<p>${paragraph}</p>`).join("");
+  legalModal.classList.add("open");
+  legalModal.setAttribute("aria-hidden", "false");
+}
+
+function closeLegal() {
+  if (!legalModal) return;
+  legalModal.classList.remove("open");
+  legalModal.setAttribute("aria-hidden", "true");
+}
+
+privacyPolicyButton?.addEventListener("click", () => openLegal("privacy"));
+termsButton?.addEventListener("click", () => openLegal("terms"));
+closeLegalModal?.addEventListener("click", closeLegal);
+legalModal?.addEventListener("click", (event) => {
+  if (event.target === legalModal) closeLegal();
 });
 
 function clearLocalSession() {

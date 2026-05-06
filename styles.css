@@ -1396,6 +1396,42 @@ input::placeholder, textarea::placeholder { color:#7f8daf; }
   font-size:10px;
   font-weight:800;
 }
+.legal-modal {
+  position:absolute;
+  inset:0;
+  z-index:34;
+  display:none;
+  place-items:center;
+  padding:18px;
+  background:rgba(2,6,23,.72);
+  backdrop-filter:blur(8px);
+}
+.legal-modal.open {
+  display:grid;
+}
+.legal-card {
+  position:relative;
+  width:100%;
+  max-height:520px;
+  overflow:auto;
+  padding:18px;
+  border-radius:22px;
+  border:1px solid rgba(175,184,255,.2);
+  background:linear-gradient(180deg, rgba(16,22,54,.98), rgba(23,20,54,.98));
+  box-shadow:0 24px 70px rgba(0,0,0,.55);
+}
+.legal-card > strong {
+  display:block;
+  margin-bottom:12px;
+  color:#fff8ec;
+  font-size:18px;
+}
+.legal-card p {
+  margin:0 0 10px;
+  color:#dfe5ff;
+  font-size:12px;
+  line-height:1.45;
+}
 .reminder-card {
   position:relative;
   z-index:1;
