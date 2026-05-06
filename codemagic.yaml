@@ -34,6 +34,12 @@ workflows:
         script: npx cap sync ios
       - name: Generate iOS app icon and splash
         script: npm run assets:ios
+      - name: Set iOS build number
+        script: |
+          cd ios/App
+          BUILD_VERSION="${PROJECT_BUILD_NUMBER:-${BUILD_NUMBER:-$(date +%s)}}"
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_VERSION" App/Info.plist
+          agvtool new-version -all "$BUILD_VERSION"
       - name: Install CocoaPods
         script: |
           cd ios/App
