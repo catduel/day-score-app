@@ -9,9 +9,9 @@ workflows:
       cocoapods: default
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.dayscore.app
+        bundle_identifier: com.ismoztas.dayscore
       vars:
-        BUNDLE_ID: "com.dayscore.app"
+        BUNDLE_ID: "com.ismoztas.dayscore"
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
     cache:

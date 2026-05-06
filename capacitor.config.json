@@ -1,5 +1,5 @@
 {
-  "appId": "com.dayscore.app",
+  "appId": "com.ismoztas.dayscore",
   "appName": "Day Score",
   "webDir": "www",
   "bundledWebRuntime": false,
