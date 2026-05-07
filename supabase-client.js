@@ -219,7 +219,14 @@
       body: JSON.stringify({ invite_code_input: inviteCode })
     });
     const group = Array.isArray(result) ? result[0] : result;
-    return { id: group.id, name: group.name, inviteCode: group.invite_code, invites: [] };
+    if (!group?.id) throw new Error("Invalid invite code.");
+    return {
+      id: group.id,
+      name: group.name,
+      inviteCode: group.invite_code,
+      alreadyMember: Boolean(group.already_member),
+      invites: []
+    };
   }
 
   async function createGroup(name) {

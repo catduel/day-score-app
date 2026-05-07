@@ -77,13 +77,13 @@
 
       <section class="phone app home" id="home">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
-        <header class="home-head"><div><h3>Hey, <span id="userName">there</span>!</h3><p>How was your day? Let's see your score.</p></div><button class="round">o</button></header>
+        <header class="home-head"><div><h3>Hey, <span id="userName">there</span>!</h3><p>How was your day? Let's see your score.</p></div><button class="round avatar-btn" id="homeAvatar" data-screen="profile" type="button"><span id="homeAvatarInitial">U</span></button></header>
         <button class="orb" data-screen="rating"><span>Today's Score</span><strong id="homeScore">--</strong><em>Tap to give<br />your score</em></button>
         <article class="glass streak-card"><i></i><div><span>Current Streak</span><strong id="homeStreak">0 days</strong><small>Keep the chain alive</small></div></article>
         <img class="hero-art small" src="./assets/home-hero.jpg" alt="" />
         <article class="glass friends"><div class="card-head"><strong>Friends</strong><a data-screen="groups">See All ></a></div><div id="homeFriendsList" class="empty-state">No friends yet.</div></article>
         <article class="glass quote">Every day is a new chance to be better.</article>
-        <nav class="nav"><button class="active" data-screen="home"><i>home</i>Home</button><button data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+        <nav class="nav"><button class="active" data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
 
       <section class="phone app rating" id="rating">
@@ -102,7 +102,7 @@
         <label class="glass reason"><span>Why did you give this score? <small>(Max. 180 characters)</small></span><textarea id="reason" maxlength="180" placeholder="Give a short reason..."></textarea><em id="count">0/180</em></label>
         <button class="btn primary" id="save">Save</button>
         <div class="horizon"></div>
-        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button data-screen="groups"><i>users</i>Groups</button><button class="plus active" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+        <nav class="nav"><button data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus active" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
 
       <section class="phone app after" id="after">
@@ -113,9 +113,9 @@
         <p>Today's Score</p>
         <div class="score-ring" id="finalScore">8</div>
         <article class="glass result"><strong>Why did you give this score?</strong><p id="finalReason">It was a productive and energetic day. I completed important tasks and had time for myself.</p><em>132/180</em></article>
-        <article class="today"><h4>Friends' Scores Today</h4><div class="empty-state">No shared friend scores yet.</div></article>
-        <div class="share"><button class="btn gold">Share</button><button class="circle">up</button></div>
-        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+        <article class="today"><h4>Friends' Scores Today</h4><div id="afterFriendsList" class="empty-state">No shared friend scores yet.</div></article>
+        <div class="share"><button class="btn gold" id="shareScoreButton" type="button">Share</button><button class="circle" id="boostScoreButton" type="button" aria-label="Boost a friend">^</button></div>
+        <nav class="nav"><button data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
 
       <section class="phone app analytics" id="analytics">
@@ -140,7 +140,7 @@
             </div>
           </div>
         </div>
-        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button class="active" data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+        <nav class="nav"><button data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus" data-screen="rating">+</button><button class="active" data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
 
       <section class="phone app groups" id="groups">
@@ -171,21 +171,21 @@
           <article class="glass friend-score" id="friendScorePanel"><i class="social-icon score"></i><strong>Friend Score</strong><span>No shared score</span></article>
         </div>
         <img class="groups-art" src="./assets/air-balloon.jpg" alt="" />
-        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button class="active" data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+        <nav class="nav"><button data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button class="active" data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
 
       <section class="phone app leaderboard" id="leaderboard">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
-        <header class="top"><button data-screen="groups">&lt;</button><div><h3>University Friends</h3><small>5 members</small></div><button>o</button></header>
+        <header class="top"><button data-screen="groups">&lt;</button><div><h3>University Friends</h3><small>5 members</small></div><button class="round avatar-btn" data-screen="profile" type="button"><span class="avatar-initial">U</span></button></header>
         <div class="tabs"><button>This Week</button><button>All Time</button></div>
         <ol class="rank"><li><span><b>B</b>Buse</span><strong>9.2</strong></li><li class="you"><span><b>Y</b>You</span><strong>7.8</strong></li><li><span><b>D</b>Deniz</span><strong>7.6</strong></li><li><span><b>C</b>Cem</span><strong>6.4</strong></li><li><span><b>A</b>Alper</span><strong>5.8</strong></li></ol>
         <button class="btn primary share-group">Share Group</button>
-        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button class="active" data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button data-screen="profile"><i>user</i>Profile</button></nav>
+        <nav class="nav"><button data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button class="active" data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
 
       <section class="phone app profile" id="profile">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
-        <header class="top"><button data-screen="home">&lt;</button><h3>Profile</h3><button>o</button></header>
+        <header class="top"><button data-screen="home">&lt;</button><h3>Profile</h3><button class="round avatar-btn" type="button"><span class="avatar-initial" id="profileTopInitial">U</span></button></header>
         <article class="glass profile-card">
           <label class="avatar" for="profilePhotoInput"><img id="profilePhoto" alt="" /><span id="profileInitial">U</span></label>
           <input id="profilePhotoInput" type="file" accept="image/*" hidden />
@@ -204,8 +204,8 @@
           <strong>Privacy</strong>
           <p>Scores stay private unless you share them with selected friends or groups.</p>
         </article>
-        <article class="glass subscription-card">
-          <div><strong>7 days free</strong><p>Then lifetime access with one-time payment.</p></div><b>$2.99</b>
+        <article class="glass subscription-card" id="subscriptionCard">
+          <div><strong id="subscriptionTitle">7 days free trial</strong><p id="subscriptionCopy">After the trial, unlock lifetime access with a one-time $2.99 payment. No subscriptions, no renewals.</p><small id="subscriptionStatus">Trial active</small></div><button class="subscription-cta" id="subscriptionCta" type="button"><b>$2.99</b><span>One-time</span></button>
         </article>
         <div class="legal-links">
           <button id="privacyPolicyButton">Privacy Policy</button>
@@ -227,7 +227,7 @@
           <button class="btn ghost" id="logoutButton">Log Out</button>
           <button class="btn danger" id="deleteAccountButton">Delete Account</button>
         </div>
-        <nav class="nav"><button data-screen="home"><i>home</i>Home</button><button data-screen="groups"><i>users</i>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><i>bars</i>Analytics</button><button class="active" data-screen="profile"><i>user</i>Profile</button></nav>
+        <nav class="nav"><button data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button class="active" data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
 
       <section class="how">

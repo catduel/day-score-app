@@ -9,3 +9,5 @@ Thumbs.db
 .env
 .env.*
 preview*.png
+.claude/
+*-original.png
