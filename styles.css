@@ -22,6 +22,9 @@
 }
 
 * { box-sizing: border-box; }
+html {
+  background: #060b20;
+}
 body {
   margin: 0;
   min-height: 100vh;
@@ -31,6 +34,20 @@ body {
     radial-gradient(circle at 15% 10%, rgba(255, 111, 168, 0.16), transparent 27rem),
     radial-gradient(circle at 86% 12%, rgba(125, 86, 255, 0.2), transparent 32rem),
     linear-gradient(135deg, #040716, #07112c 54%, #10122f);
+}
+html,
+body,
+.phone {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.phone::-webkit-scrollbar,
+.legal-card::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 button, input, textarea { font: inherit; }
@@ -608,7 +625,20 @@ input::placeholder, textarea::placeholder { color:#7f8daf; }
   border:1px solid var(--line); border-radius: 18px; background:rgba(5,10,30,.82); backdrop-filter:blur(20px);
   z-index: 12;
 }
-.nav button { border:0; background:transparent; color:#7f8daf; font-size:9px; font-weight:800; }
+.nav button {
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  background:transparent;
+  color:#7f8daf;
+  font-size:9px;
+  font-weight:800;
+  text-align:center;
+  line-height:1;
+}
 .nav button i {
   display: block;
   width: 18px;
@@ -635,7 +665,20 @@ input::placeholder, textarea::placeholder { color:#7f8daf; }
   --icon-mask: linear-gradient(#000 0 0) 14% 75% / 18% 36% no-repeat, linear-gradient(#000 0 0) 50% 62% / 18% 62% no-repeat, linear-gradient(#000 0 0) 86% 42% / 18% 88% no-repeat;
 }
 .nav .active { color:var(--gold); }
-.nav .plus { width:44px; height:44px; margin:auto; border-radius:50%; color:white; font-size:22px; background:linear-gradient(180deg,#866bff,#32286e); box-shadow:0 0 18px rgba(134,107,255,.55); }
+.nav .plus {
+  width:44px;
+  height:44px;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  padding:0 0 2px;
+  border-radius:50%;
+  color:white;
+  font-size:24px;
+  line-height:1;
+  background:linear-gradient(180deg,#866bff,#32286e);
+  box-shadow:0 0 18px rgba(134,107,255,.55);
+}
 .nav .plus i { display:none; }
 
 .chip { position:relative; z-index:1; width:max-content; margin:4px auto 8px; padding:10px 15px; border-radius:999px; background:rgba(255,255,255,.05); color:#dce5ff; font-size:12px; }
@@ -798,12 +841,13 @@ input::placeholder, textarea::placeholder { color:#7f8daf; }
 .share { gap:12px; margin-top:14px; }
 .share .btn { flex:1; }
 .streak-card {
-  position:absolute;
+  position:relative;
   z-index:2;
-  left:50%;
-  top:258px;
+  left:auto;
+  top:auto;
   width:224px;
-  transform:translateX(-50%);
+  transform:none;
+  margin:10px auto 0;
   display:grid;
   grid-template-columns:42px 1fr;
   gap:11px;
@@ -1588,6 +1632,7 @@ input::placeholder, textarea::placeholder { color:#7f8daf; }
     min-height: 100%;
     overflow: hidden;
     background: #060b20;
+    overscroll-behavior: none;
   }
 
   .showcase {
@@ -1600,17 +1645,49 @@ input::placeholder, textarea::placeholder { color:#7f8daf; }
   .phone {
     display: none;
     width: 100vw;
+    height: 100vh;
     height: 100dvh;
-    min-height: 0;
+    min-height: 100svh;
     margin: 0;
     border: 0;
     border-radius: 0;
     box-shadow: none;
-    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: max(16px, env(safe-area-inset-top)) 16px calc(92px + env(safe-area-inset-bottom));
   }
 
   .phone.is-current {
     display: block;
+  }
+
+  .phone.app {
+    padding-bottom: calc(104px + env(safe-area-inset-bottom));
+  }
+
+  .nav {
+    bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .home .quote {
+    bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+
+  .friends {
+    bottom: calc(122px + env(safe-area-inset-bottom));
+  }
+
+  .groups-art {
+    bottom: calc(58px + env(safe-area-inset-bottom));
+  }
+
+  .rating .horizon {
+    bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+
+  .profile {
+    padding-bottom: calc(128px + env(safe-area-inset-bottom));
   }
 
   .how {

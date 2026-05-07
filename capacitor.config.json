@@ -3,8 +3,9 @@
   "appName": "My Day Point",
   "webDir": "www",
   "bundledWebRuntime": false,
+  "backgroundColor": "#060b20",
   "ios": {
-    "contentInset": "automatic",
+    "contentInset": "never",
     "allowsLinkPreview": false
   }
 }
