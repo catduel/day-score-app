@@ -32,7 +32,8 @@ const highestScore = document.querySelector("#highestScore");
 const highestDay = document.querySelector("#highestDay");
 const lowestScore = document.querySelector("#lowestScore");
 const lowestDay = document.querySelector("#lowestDay");
-const totalScore = document.querySelector("#totalScore");
+const overallAverage = document.querySelector("#overallAverage");
+const overallAverageNote = document.querySelector("#overallAverageNote");
 const daysScored = document.querySelector("#daysScored");
 const analyticsDate = document.querySelector("#analyticsDate");
 const todayDate = document.querySelector("#todayDate");
@@ -464,7 +465,8 @@ function updateAnalytics() {
     if (lowestScore) lowestScore.textContent = "--";
     if (highestDay) highestDay.textContent = "No data yet";
     if (lowestDay) lowestDay.textContent = "No data yet";
-    if (totalScore) totalScore.textContent = "0";
+    if (overallAverage) overallAverage.textContent = "--";
+    if (overallAverageNote) overallAverageNote.textContent = "All days you scored";
     if (daysScored) daysScored.textContent = "0";
     if (archiveCount) archiveCount.textContent = "0 saved";
     renderArchiveSummary(allScores);
@@ -504,7 +506,10 @@ function updateAnalytics() {
   if (lowestScore) lowestScore.textContent = lowest.score;
   if (highestDay) highestDay.textContent = formatDay(highest.at);
   if (lowestDay) lowestDay.textContent = formatDay(lowest.at);
-  if (totalScore) totalScore.textContent = total;
+  const allTotal = allScores.reduce((sum, entry) => sum + entry.score, 0);
+  const allAverage = allScores.length ? (allTotal / allScores.length) : 0;
+  if (overallAverage) overallAverage.textContent = allScores.length ? allAverage.toFixed(1) : "--";
+  if (overallAverageNote) overallAverageNote.textContent = `${allScores.length} day${allScores.length === 1 ? "" : "s"} total`;
   if (daysScored) daysScored.textContent = scores.length;
   if (archiveCount) archiveCount.textContent = `${allScores.length} saved`;
   renderArchiveSummary(allScores);
@@ -891,9 +896,56 @@ function scheduleReminder() {
   }, nextReminderDelay(time));
 }
 
+function isNativePlatform() {
+  return Boolean(window.Capacitor?.isNativePlatform?.());
+}
+
+async function enableNativeReminder(time) {
+  const localNotifications = window.Capacitor?.Plugins?.LocalNotifications;
+  if (!localNotifications) return false;
+  try {
+    const permission = await localNotifications.requestPermissions?.();
+    if (permission && permission.display !== "granted") {
+      if (reminderStatus) reminderStatus.textContent = "Reminder permission was not allowed.";
+      return true;
+    }
+    const [hours, minutes] = time.split(":").map(Number);
+    await localNotifications.cancel?.({ notifications: [{ id: 7710 }] }).catch(() => {});
+    await localNotifications.schedule({
+      notifications: [{
+        id: 7710,
+        title: "What's Your Day Score?",
+        body: "Your day is wrapping up. Time to score it.",
+        schedule: { on: { hour: hours, minute: minutes }, allowWhileIdle: true, repeats: true }
+      }]
+    });
+    return true;
+  } catch (error) {
+    console.warn("LocalNotifications schedule failed", error);
+    if (reminderStatus) reminderStatus.textContent = "Could not schedule the reminder. Please try again.";
+    return true;
+  }
+}
+
 async function enableReminder() {
+  const time = reminderTimeInput?.value || "20:00";
+  if (isNativePlatform()) {
+    const handled = await enableNativeReminder(time);
+    if (handled) {
+      localStorage.setItem(REMINDER_KEY, JSON.stringify({ enabled: true, time, native: true }));
+      setReminderUi(time);
+      if (reminderStatus) reminderStatus.textContent = `Reminder is on for ${time}.`;
+      return;
+    }
+    localStorage.setItem(REMINDER_KEY, JSON.stringify({ enabled: true, time, pendingNative: true }));
+    setReminderUi(time);
+    if (reminderStatus) reminderStatus.textContent = `Reminder set for ${time}. Native notifications will activate after the next build.`;
+    return;
+  }
   if (!("Notification" in window)) {
-    if (reminderStatus) reminderStatus.textContent = "Notifications are not supported in this browser.";
+    localStorage.setItem(REMINDER_KEY, JSON.stringify({ enabled: true, time }));
+    setReminderUi(time);
+    if (reminderStatus) reminderStatus.textContent = `Reminder saved for ${time}. You'll get the system push on the installed iOS app.`;
     return;
   }
   const permission = Notification.permission === "granted" ? "granted" : await Notification.requestPermission();
@@ -901,7 +953,6 @@ async function enableReminder() {
     if (reminderStatus) reminderStatus.textContent = "Reminder permission was not allowed.";
     return;
   }
-  const time = reminderTimeInput?.value || "20:00";
   localStorage.setItem(REMINDER_KEY, JSON.stringify({ enabled: true, time }));
   setReminderUi(time);
   scheduleReminder();
