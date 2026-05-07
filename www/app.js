@@ -13,6 +13,17 @@ const signupButton = document.querySelector("#signupButton");
 const loginButton = document.querySelector("#loginButton");
 const rememberMe = document.querySelector("#rememberMe");
 const userNameEl = document.querySelector("#userName");
+const homeAvatarInitial = document.querySelector("#homeAvatarInitial");
+const profileTopInitial = document.querySelector("#profileTopInitial");
+const avatarInitialEls = document.querySelectorAll(".avatar-initial");
+const afterFriendsList = document.querySelector("#afterFriendsList");
+const shareScoreButton = document.querySelector("#shareScoreButton");
+const boostScoreButton = document.querySelector("#boostScoreButton");
+const subscriptionCard = document.querySelector("#subscriptionCard");
+const subscriptionTitle = document.querySelector("#subscriptionTitle");
+const subscriptionCopy = document.querySelector("#subscriptionCopy");
+const subscriptionStatus = document.querySelector("#subscriptionStatus");
+const subscriptionCta = document.querySelector("#subscriptionCta");
 const weeklyAverage = document.querySelector("#weeklyAverage");
 const scoreLine = document.querySelector("#scoreLine");
 const scoreDots = document.querySelector("#scoreDots");
@@ -82,6 +93,9 @@ const REMINDER_KEY = "dayScoreReminder.v1";
 const SESSION_KEY = "dayScoreRemember.v1";
 const PENDING_INVITE_KEY = "dayScorePendingInvite.v1";
 const ACTIVE_USER_KEY = "dayScoreActiveUser.v1";
+const SUBSCRIPTION_KEY = "dayScoreSubscription.v1";
+const TRIAL_DAYS = 7;
+const LIFETIME_PRICE = "$2.99";
 const backend = window.DayScoreBackend;
 
 let reminderTimer = null;
@@ -231,14 +245,19 @@ async function consumePendingInvite() {
     showScreen("groups");
     return true;
   } catch (error) {
-    if (error.message.includes("duplicate key") || error.message.includes("group_members_pkey")) {
+    const message = String(error?.message || "");
+    if (message.includes("duplicate key") || message.includes("group_members_pkey")) {
       localStorage.removeItem(PENDING_INVITE_KEY);
       await syncBackendState();
       alert("You are already in this group.");
       showScreen("groups");
       return true;
     }
-    alert(error.message);
+    if (message.toLowerCase().includes("function") && message.toLowerCase().includes("does not exist")) {
+      alert("Group invites need a Supabase update. Please run supabase/groups-rpc.sql in your Supabase SQL Editor and try again.");
+      return false;
+    }
+    alert(message || "Could not join the group.");
     return false;
   }
 }
@@ -258,12 +277,21 @@ function getUser() {
   }
 }
 
+function userInitial(user) {
+  const seed = user?.name?.trim() || user?.email?.trim() || "U";
+  return seed.charAt(0).toUpperCase();
+}
+
 function hydrateUser() {
   const user = getUser();
+  const initial = userInitial(user);
   if (userNameEl) userNameEl.textContent = user?.name || "there";
   if (profileName) profileName.textContent = user?.name || "there";
   if (profileEmail) profileEmail.textContent = user?.email || "No email yet";
-  if (profileInitial) profileInitial.textContent = (user?.name || "U").trim().charAt(0).toUpperCase();
+  if (profileInitial) profileInitial.textContent = initial;
+  if (homeAvatarInitial) homeAvatarInitial.textContent = initial;
+  if (profileTopInitial) profileTopInitial.textContent = initial;
+  avatarInitialEls.forEach((el) => { el.textContent = initial; });
   if (profilePhoto && profileInitial) {
     profilePhoto.src = user?.photo || "";
     profileInitial.parentElement?.classList.toggle("has-photo", Boolean(user?.photo));
@@ -275,9 +303,13 @@ function showScreen(id) {
   if (!target) return;
   if (id === "analytics") updateAnalytics();
   if (id === "groups") renderGroups();
-  if (id === "profile") updateProfile();
+  if (id === "profile") { updateProfile(); renderSubscription(); }
+  if (id === "after") renderAfterFriends();
   screens.forEach((screen) => screen.classList.toggle("is-current", screen === target));
-  target.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+  target.scrollTop = 0;
+  if (!window.matchMedia("(max-width: 640px)").matches) {
+    target.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+  }
 }
 
 navTargets.forEach((item) => {
@@ -302,43 +334,51 @@ reasonInput.addEventListener("input", () => {
   count.textContent = `${reasonInput.value.length}/180`;
 });
 
-save.addEventListener("click", async () => {
+async function persistScoreToBackend(score, reason) {
+  if (!backendEnabled()) return;
+  try {
+    const activeUser = getUser();
+    const backendUser = backend.currentUser?.();
+    backend.upsertProfile({
+      full_name: activeUser?.name || backendUser?.user_metadata?.full_name || backendUser?.email?.split("@")[0] || "",
+      email: activeUser?.email || backendUser?.email || ""
+    }).catch((error) => console.warn("profile sync", error));
+    await backend.saveScore({ score, reason, scoreDate: dayKey(new Date()) });
+    syncBackendState().catch((error) => console.warn("sync", error));
+  } catch (error) {
+    const message = String(error?.message || "");
+    if (message.toLowerCase().includes("duplicate")) {
+      console.warn("score already exists remotely", error);
+      return;
+    }
+    console.warn("score backend save failed", error);
+  }
+}
+
+save.addEventListener("click", () => {
   const reason = reasonInput.value.trim() || "It was a productive and energetic day. I completed important tasks and had time for myself.";
   const scores = getScores();
   if (scores.some((entry) => dayKey(entry.at) === dayKey(new Date()))) {
     alert("You already scored today. You can score again tomorrow.");
     return;
   }
-  if (backendEnabled()) {
-    try {
-      const activeUser = getUser();
-      const backendUser = backend.currentUser?.();
-      await backend.upsertProfile({
-        full_name: activeUser?.name || backendUser?.user_metadata?.full_name || backendUser?.email?.split("@")[0] || "",
-        email: activeUser?.email || backendUser?.email || ""
-      });
-      await backend.saveScore({ score: selectedScore, reason, scoreDate: dayKey(new Date()) });
-      const localAfterSave = getScores();
-      if (!localAfterSave.some((entry) => dayKey(entry.at) === dayKey(new Date()))) {
-        localAfterSave.push({ score: selectedScore, reason, at: new Date().toISOString() });
-        setScores(localAfterSave);
-      }
-      await syncBackendState();
-    } catch (error) {
-      alert(error.message.includes("duplicate") ? "You already scored today. You can score again tomorrow." : error.message);
-      return;
-    }
-  }
-  if (!backendEnabled()) {
-    scores.push({ score: selectedScore, reason, at: new Date().toISOString() });
-    setScores(scores);
-  }
+  const entry = { score: selectedScore, reason, at: new Date().toISOString() };
+  scores.push(entry);
+  setScores(scores);
   finalScore.textContent = selectedScore;
   homeScore.textContent = selectedScore;
   finalReason.textContent = reason;
+  reasonInput.value = "";
+  if (count) count.textContent = "0/180";
+  if (boostScoreButton) {
+    boostScoreButton.classList.remove("boosted");
+    boostScoreButton.textContent = "^";
+  }
   updateAnalytics();
   renderGroups();
+  renderAfterFriends();
   showScreen("after");
+  persistScoreToBackend(selectedScore, reason);
 });
 
 function formatDay(value) {
@@ -764,21 +804,33 @@ async function createGroup() {
     alert("Write a group name first.");
     return;
   }
-  if (backendEnabled()) {
-    try {
-      await backend.createGroup(name);
-      setGroups(await backend.getGroups());
-    } catch (error) {
-      alert(error.message);
+  const release = lockButton(createGroupButton, "Creating...");
+  try {
+    if (backendEnabled()) {
+      const created = await backend.createGroup(name);
+      const existing = getGroups();
+      if (created && !existing.some((group) => group.id === created.id)) {
+        setGroups([{ ...created, members: [] }, ...existing]);
+      }
+      groupNameInput.value = "";
+      renderGroups();
+      backend.getGroups().then((groups) => {
+        setGroups(groups.map((group) => ({ ...group, members: [] })));
+        renderGroups();
+        syncBackendState().catch((error) => console.warn(error));
+      }).catch((error) => console.warn(error));
       return;
     }
-  } else {
     const groups = getGroups();
     groups.push({ id: crypto.randomUUID(), name, inviteCode: Math.random().toString(36).slice(2, 10), invites: [] });
     setGroups(groups);
+    groupNameInput.value = "";
+    renderGroups();
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    release();
   }
-  groupNameInput.value = "";
-  renderGroups();
 }
 
 async function inviteFriend() {
@@ -951,10 +1003,13 @@ deleteAccountButton?.addEventListener("click", () => {
   localStorage.removeItem(USER_KEY);
   localStorage.removeItem(SCORES_KEY);
   localStorage.removeItem(GROUPS_KEY);
+  localStorage.removeItem(SUBSCRIPTION_KEY);
+  localStorage.removeItem(REMINDER_KEY);
   hydrateUser();
   updateDateUi();
   renderGroups();
   updateProfile();
+  renderSubscription();
   alert("Local account data cleared. Next we will connect permanent Supabase account deletion.");
   showScreen("welcome");
 });
@@ -968,6 +1023,7 @@ signupButton?.addEventListener("click", async () => {
     return;
   }
   if (backendEnabled()) {
+    const release = lockButton(signupButton, "Creating account...");
     try {
       const data = await backend.signUp({ name, email, password });
       const identities = data.user?.identities;
@@ -980,10 +1036,11 @@ signupButton?.addEventListener("click", async () => {
       const session = backend.getSession?.() ? data : await backend.signIn({ email, password });
       setUser({ id: session.user?.id || data.user?.id, name, email });
       localStorage.setItem(SESSION_KEY, "true");
-      await backend.upsertProfile({ full_name: name, email });
-      await syncBackendState();
-      if (!(await consumePendingInvite())) showScreen("home");
-      return;
+      ensureTrialStarted();
+      hydrateUser();
+      showScreen("home");
+      backend.upsertProfile({ full_name: name, email }).catch((error) => console.warn(error));
+      syncBackendState().then(() => consumePendingInvite()).catch((error) => console.warn(error));
     } catch (error) {
       const message = String(error.message || "");
       if (message.toLowerCase().includes("already") || message.toLowerCase().includes("registered")) {
@@ -993,12 +1050,29 @@ signupButton?.addEventListener("click", async () => {
         return;
       }
       alert(error.message);
-      return;
+    } finally {
+      release();
     }
+    return;
   }
   setUser({ name, email, password });
+  ensureTrialStarted();
+  hydrateUser();
   showScreen("home");
 });
+
+function lockButton(button, busyLabel) {
+  if (!button) return () => {};
+  const original = button.textContent;
+  button.disabled = true;
+  button.dataset.busy = "true";
+  button.textContent = busyLabel;
+  return () => {
+    button.disabled = false;
+    delete button.dataset.busy;
+    button.textContent = original;
+  };
+}
 
 loginButton?.addEventListener("click", async () => {
   const saved = getUser();
@@ -1009,26 +1083,22 @@ loginButton?.addEventListener("click", async () => {
       alert("Email and password are required.");
       return;
     }
+    const release = lockButton(loginButton, "Signing in...");
     try {
       const session = await backend.signIn({ email, password });
-      setUser({
-        id: session.user?.id,
-        name: session.user?.user_metadata?.full_name || saved?.name || email.split("@")[0],
-        email
-      });
+      const fullName = session.user?.user_metadata?.full_name || saved?.name || email.split("@")[0];
+      setUser({ id: session.user?.id, name: fullName, email });
       localStorage.setItem(SESSION_KEY, rememberMe?.checked ? "true" : "false");
-      await backend.upsertProfile({
-        full_name: session.user?.user_metadata?.full_name || saved?.name || email.split("@")[0],
-        email
-      });
-      await syncBackendState();
       hydrateUser();
-      if (!(await consumePendingInvite())) showScreen("home");
-      return;
+      showScreen("home");
+      backend.upsertProfile({ full_name: fullName, email }).catch((error) => console.warn(error));
+      syncBackendState().then(() => consumePendingInvite()).catch((error) => console.warn(error));
     } catch (error) {
       alert(error.message);
-      return;
+    } finally {
+      release();
     }
+    return;
   }
   if (!saved) {
     alert("Create an account first.");
@@ -1044,6 +1114,145 @@ loginButton?.addEventListener("click", async () => {
   showScreen("home");
 });
 
+function renderAfterFriends() {
+  if (!afterFriendsList) return;
+  const friends = getFriendBoard();
+  if (!friends.length) {
+    afterFriendsList.className = "empty-state";
+    afterFriendsList.innerHTML = "No shared friend scores yet.";
+    return;
+  }
+  afterFriendsList.className = "after-friends";
+  afterFriendsList.innerHTML = friends.slice(0, 5).map((friend) => (
+    `<article>
+      <span>${memberInitial(friend)}</span>
+      <strong>${memberLabel(friend)}</strong>
+      <b>${friend.score}/10</b>
+    </article>`
+  )).join("");
+}
+
+async function shareTodayScore() {
+  const latest = getDailyScores().at(-1);
+  const score = latest?.score ?? selectedScore;
+  const reason = latest?.reason || reasonInput?.value?.trim() || "";
+  const groups = getGroups();
+  const link = groups[0] ? makeInviteLink(groups[0]) : window.location.origin;
+  const text = `My Day Score today is ${score}/10${reason ? ` — ${reason}` : ""}.`;
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: "My Day Score", text, url: link });
+      return;
+    }
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(`${text}\n${link}`);
+      alert("Score copied. Paste it anywhere to share.");
+      return;
+    }
+    alert(`${text}\n${link}`);
+  } catch (error) {
+    if (error?.name !== "AbortError") console.warn(error);
+  }
+}
+
+function toggleBoost() {
+  if (!boostScoreButton) return;
+  const next = !boostScoreButton.classList.contains("boosted");
+  boostScoreButton.classList.toggle("boosted", next);
+  boostScoreButton.setAttribute("aria-pressed", next ? "true" : "false");
+  boostScoreButton.textContent = next ? "+1" : "^";
+}
+
+shareScoreButton?.addEventListener("click", shareTodayScore);
+boostScoreButton?.addEventListener("click", toggleBoost);
+
+function getSubscription() {
+  try {
+    return JSON.parse(localStorage.getItem(SUBSCRIPTION_KEY) || "null") || {};
+  } catch {
+    return {};
+  }
+}
+
+function setSubscription(next) {
+  const current = getSubscription();
+  localStorage.setItem(SUBSCRIPTION_KEY, JSON.stringify({ ...current, ...next }));
+}
+
+function ensureTrialStarted() {
+  const sub = getSubscription();
+  if (!sub.trialStartedAt) setSubscription({ trialStartedAt: new Date().toISOString() });
+}
+
+function trialDaysRemaining() {
+  const sub = getSubscription();
+  if (!sub.trialStartedAt) return TRIAL_DAYS;
+  const started = new Date(sub.trialStartedAt).getTime();
+  const elapsed = (Date.now() - started) / (1000 * 60 * 60 * 24);
+  return Math.max(0, Math.ceil(TRIAL_DAYS - elapsed));
+}
+
+function renderSubscription() {
+  if (!subscriptionCard) return;
+  const sub = getSubscription();
+  const unlocked = Boolean(sub.lifetime);
+  subscriptionCard.classList.toggle("unlocked", unlocked);
+  if (unlocked) {
+    if (subscriptionTitle) subscriptionTitle.textContent = "Lifetime unlocked";
+    if (subscriptionCopy) subscriptionCopy.textContent = "Thanks for supporting My Day Point. All features are unlocked forever.";
+    if (subscriptionStatus) subscriptionStatus.textContent = "Paid";
+    if (subscriptionCta) {
+      subscriptionCta.disabled = true;
+      subscriptionCta.innerHTML = `<b>Active</b><span>Lifetime</span>`;
+    }
+    return;
+  }
+  const remaining = trialDaysRemaining();
+  const trialOver = remaining <= 0;
+  if (subscriptionTitle) subscriptionTitle.textContent = trialOver ? "Trial ended" : `${remaining} day${remaining === 1 ? "" : "s"} of trial left`;
+  if (subscriptionCopy) {
+    subscriptionCopy.textContent = trialOver
+      ? `Unlock lifetime access with a one-time ${LIFETIME_PRICE} payment. No subscriptions, no renewals.`
+      : `After the 7-day trial, unlock lifetime access with a one-time ${LIFETIME_PRICE} payment. No subscriptions, no renewals.`;
+  }
+  if (subscriptionStatus) {
+    subscriptionStatus.textContent = trialOver ? "Trial expired" : "Trial active";
+  }
+  if (subscriptionCta) {
+    subscriptionCta.disabled = false;
+    subscriptionCta.innerHTML = `<b>${LIFETIME_PRICE}</b><span>One-time</span>`;
+  }
+}
+
+async function purchaseLifetime() {
+  const sub = getSubscription();
+  if (sub.lifetime) return;
+  const useStoreKit = window.Capacitor?.isNativePlatform?.() && window.Capacitor?.Plugins?.Purchases;
+  if (useStoreKit) {
+    try {
+      const purchases = window.Capacitor.Plugins.Purchases;
+      const offering = await purchases.getOfferings?.();
+      const product = offering?.current?.lifetime || offering?.current?.availablePackages?.[0];
+      if (product) await purchases.purchasePackage({ aPackage: product });
+      setSubscription({ lifetime: true, purchasedAt: new Date().toISOString() });
+      renderSubscription();
+      alert("Lifetime access unlocked. Thank you!");
+      return;
+    } catch (error) {
+      if (error?.userCancelled) return;
+      alert(error?.message || "Purchase failed. Please try again.");
+      return;
+    }
+  }
+  const confirmed = confirm(`Unlock lifetime access for ${LIFETIME_PRICE}? In-app purchase will be processed once App Store billing is connected.`);
+  if (!confirmed) return;
+  setSubscription({ lifetime: true, purchasedAt: new Date().toISOString(), pendingStoreKit: true });
+  renderSubscription();
+  alert("Lifetime access marked as unlocked locally. The actual purchase will run through StoreKit on the live build.");
+}
+
+subscriptionCta?.addEventListener("click", purchaseLifetime);
+
 captureInviteFromUrl();
 const remembered = localStorage.getItem(SESSION_KEY) === "true" && Boolean(getUser());
 if (rememberMe) rememberMe.checked = remembered;
@@ -1051,6 +1260,7 @@ const initialScreen = window.location.hash.replace("#", "") || (remembered ? "ho
 const previewScore = new URLSearchParams(window.location.search).get("score");
 if (previewScore !== null && !Number.isNaN(Number(previewScore))) selectScore(previewScore);
 setReminderUi(getReminderTime());
+if (getUser()) ensureTrialStarted();
 showScreen(initialScreen);
 updateScoreDial(selectedScore);
 hydrateUser();
@@ -1058,6 +1268,7 @@ updateDateUi();
 renderGroups();
 renderHomeFriends();
 updateProfile();
+renderSubscription();
 syncBackendState();
 setInterval(updateDateUi, 60 * 1000);
 const savedReminder = (() => {
