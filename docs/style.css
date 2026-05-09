@@ -1,0 +1,106 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 32px 20px 56px;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.65;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 111, 168, .15), transparent 38%),
+    radial-gradient(circle at 88% 14%, rgba(125, 86, 255, .18), transparent 42%),
+    linear-gradient(170deg, #050816 0%, #07112c 55%, #0d1136 100%);
+  color: #eef2ff;
+  min-height: 100vh;
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  background: rgba(12, 18, 44, .82);
+  border: 1px solid rgba(175, 184, 255, .18);
+  border-radius: 22px;
+  padding: 36px 32px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, .35);
+}
+
+.kicker {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #ffd28a;
+}
+
+.kicker a { color: inherit; text-decoration: none; }
+
+h1 {
+  margin: 0 0 6px;
+  font-size: 30px;
+  line-height: 1.2;
+  color: #fff8ec;
+  letter-spacing: -.02em;
+}
+
+h2 {
+  margin: 28px 0 8px;
+  font-size: 18px;
+  color: #ffe5a4;
+  letter-spacing: .2px;
+}
+
+h3 {
+  margin: 22px 0 6px;
+  font-size: 15px;
+  color: #fff8ec;
+}
+
+p { margin: 8px 0 14px; }
+
+.lead { font-size: 16px; color: #d8defa; }
+
+.muted { color: #9faad6; font-size: 13px; }
+
+a { color: #ff90b8; text-decoration: underline; text-underline-offset: 3px; }
+a:hover { color: #ffb1cc; }
+
+ul {
+  margin: 8px 0 14px;
+  padding-left: 22px;
+}
+
+ul li { margin: 5px 0; }
+
+.feature-list, .link-list { padding-left: 0; list-style: none; }
+
+.feature-list li {
+  padding: 12px 14px;
+  margin: 8px 0;
+  border: 1px solid rgba(175, 184, 255, .14);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .03);
+}
+
+.feature-list strong { color: #ffe08a; }
+
+.link-list li {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.footer-note {
+  margin-top: 36px;
+  font-size: 12px;
+  color: #8c97c5;
+}
+
+.landing h1 { font-size: 36px; }
+.landing .lead { font-size: 17px; }
+
+@media (max-width: 640px) {
+  body { padding: 18px 14px 40px; }
+  main { padding: 24px 18px; border-radius: 16px; }
+  h1 { font-size: 24px; }
+  .landing h1 { font-size: 26px; }
+}
