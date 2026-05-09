@@ -207,6 +207,7 @@
         <article class="glass subscription-card" id="subscriptionCard">
           <div><strong id="subscriptionTitle">7 days free trial</strong><p id="subscriptionCopy">After the trial, unlock lifetime access with a one-time $2.99 payment. No subscriptions, no renewals.</p><small id="subscriptionStatus">Trial active</small></div><button class="subscription-cta" id="subscriptionCta" type="button"><b>$2.99</b><span>One-time</span></button>
         </article>
+        <button class="restore-link" id="restorePurchasesButton" type="button">Restore Purchases</button>
         <div class="legal-links">
           <button id="privacyPolicyButton">Privacy Policy</button>
           <button id="termsButton">Terms of Use</button>
@@ -241,6 +242,16 @@
         </div>
         <img class="how-art" src="./assets/how-it-works.jpg" alt="" />
       </section>
+      <div class="paywall-modal" id="paywallModal" aria-hidden="true">
+        <div class="paywall-card">
+          <div class="paywall-icon">10</div>
+          <strong id="paywallTitle">Your free trial has ended</strong>
+          <p id="paywallCopy">Unlock lifetime access to keep scoring, see your trends, and stay in your friend groups. One-time $2.99 — no subscription, no auto-renewal.</p>
+          <button class="btn primary" id="paywallBuyButton" type="button">Unlock for $2.99</button>
+          <button class="paywall-restore" id="paywallRestoreButton" type="button">Restore Purchase</button>
+          <button class="paywall-dismiss" id="paywallDismissButton" type="button">Maybe later</button>
+        </div>
+      </div>
     </main>
     <script src="./supabase-config.js"></script>
     <script src="./supabase-client.js"></script>

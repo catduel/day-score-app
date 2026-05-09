@@ -24,6 +24,13 @@ const subscriptionTitle = document.querySelector("#subscriptionTitle");
 const subscriptionCopy = document.querySelector("#subscriptionCopy");
 const subscriptionStatus = document.querySelector("#subscriptionStatus");
 const subscriptionCta = document.querySelector("#subscriptionCta");
+const restorePurchasesButton = document.querySelector("#restorePurchasesButton");
+const paywallModal = document.querySelector("#paywallModal");
+const paywallTitle = document.querySelector("#paywallTitle");
+const paywallCopy = document.querySelector("#paywallCopy");
+const paywallBuyButton = document.querySelector("#paywallBuyButton");
+const paywallRestoreButton = document.querySelector("#paywallRestoreButton");
+const paywallDismissButton = document.querySelector("#paywallDismissButton");
 const weeklyAverage = document.querySelector("#weeklyAverage");
 const scoreLine = document.querySelector("#scoreLine");
 const scoreDots = document.querySelector("#scoreDots");
@@ -357,6 +364,10 @@ async function persistScoreToBackend(score, reason) {
 }
 
 save.addEventListener("click", () => {
+  if (!canUsePaidFeatures()) {
+    openPaywall("expired");
+    return;
+  }
   const reason = reasonInput.value.trim() || "It was a productive and energetic day. I completed important tasks and had time for myself.";
   const scores = getScores();
   if (scores.some((entry) => dayKey(entry.at) === dayKey(new Date()))) {
@@ -804,6 +815,10 @@ function makeInviteLink(group) {
 }
 
 async function createGroup() {
+  if (!canUsePaidFeatures()) {
+    openPaywall("expired");
+    return;
+  }
   const name = groupNameInput?.value.trim();
   if (!name) {
     alert("Write a group name first.");
@@ -973,23 +988,27 @@ profilePhotoInput?.addEventListener("change", () => {
   reader.readAsDataURL(file);
 });
 
+const LEGAL_BASE_URL = "https://catduel.github.io/day-score-app";
+
 const legalCopy = {
   privacy: {
     title: "Privacy Policy",
     body: [
-      "My Day Point stores your account profile, daily scores, notes, groups, invite codes, reminder preference, and optional profile photo.",
-      "Your scores are private by default. Shared scores are visible only inside groups you join or create.",
-      "Authentication and app data are handled through Supabase. We do not sell personal data.",
-      "You can log out or request account deletion from the Profile screen."
+      "My Day Point stores your account profile, daily scores, written reasons, groups, invite codes, reminder preference, and optional profile photo.",
+      "Scores are private by default. They become visible only to members of groups you create or join, and only after you submit a score for that day.",
+      "Authentication and data storage run on Supabase. We do not sell or share data with advertisers, and the app contains no third-party tracking.",
+      "You can log out or delete your account from the Profile screen. Deletion removes your scores and owned groups within 30 days.",
+      `Read the full policy at ${LEGAL_BASE_URL}/privacy-policy.html`
     ]
   },
   terms: {
     title: "Terms of Use",
     body: [
-      "My Day Point is a personal daily self-evaluation tool, not a medical, therapy, or mood diagnosis service.",
-      "The app includes a 7-day free trial. After that, lifetime access may be offered as a one-time purchase.",
-      "You are responsible for the notes and scores you choose to share with invited friends or groups.",
-      "By using the app, you agree to use it lawfully and not misuse invite links, groups, or shared content."
+      "My Day Point is a personal self-evaluation tool, not a medical, therapy, or diagnostic service.",
+      "The app offers a 7-day free trial. After the trial, lifetime access can be unlocked as a one-time $2.99 in-app purchase. There is no subscription and no auto-renewal.",
+      "Restore Purchases is available from the Profile screen if you previously paid on the same Apple ID.",
+      "You are responsible for the notes and scores you share with invited friends or groups, and you agree to use invite links lawfully.",
+      `Read the full Terms at ${LEGAL_BASE_URL}/terms-of-use.html`
     ]
   }
 };
@@ -1275,9 +1294,42 @@ function renderSubscription() {
   }
 }
 
+function isLifetimeUnlocked() {
+  return Boolean(getSubscription().lifetime);
+}
+
+function isTrialActive() {
+  return trialDaysRemaining() > 0;
+}
+
+function canUsePaidFeatures() {
+  return isLifetimeUnlocked() || isTrialActive();
+}
+
+function openPaywall(reason) {
+  if (!paywallModal) return;
+  if (paywallTitle) paywallTitle.textContent = reason === "expired" ? "Your free trial has ended" : "Unlock lifetime access";
+  if (paywallCopy) paywallCopy.textContent = reason === "expired"
+    ? `To keep saving daily scores and using friend groups, unlock lifetime access. One-time ${LIFETIME_PRICE} — no subscription, no auto-renewal.`
+    : `Get lifetime access to every feature for one payment. ${LIFETIME_PRICE} — no subscription, no auto-renewal.`;
+  paywallModal.classList.add("open");
+  paywallModal.setAttribute("aria-hidden", "false");
+}
+
+function closePaywall() {
+  if (!paywallModal) return;
+  paywallModal.classList.remove("open");
+  paywallModal.setAttribute("aria-hidden", "true");
+}
+
+function enforcePaywallOnLaunch() {
+  if (!getUser()) return;
+  if (canUsePaidFeatures()) return;
+  openPaywall("expired");
+}
+
 async function purchaseLifetime() {
-  const sub = getSubscription();
-  if (sub.lifetime) return;
+  if (isLifetimeUnlocked()) return;
   const useStoreKit = window.Capacitor?.isNativePlatform?.() && window.Capacitor?.Plugins?.Purchases;
   if (useStoreKit) {
     try {
@@ -1287,6 +1339,7 @@ async function purchaseLifetime() {
       if (product) await purchases.purchasePackage({ aPackage: product });
       setSubscription({ lifetime: true, purchasedAt: new Date().toISOString() });
       renderSubscription();
+      closePaywall();
       alert("Lifetime access unlocked. Thank you!");
       return;
     } catch (error) {
@@ -1299,10 +1352,39 @@ async function purchaseLifetime() {
   if (!confirmed) return;
   setSubscription({ lifetime: true, purchasedAt: new Date().toISOString(), pendingStoreKit: true });
   renderSubscription();
-  alert("Lifetime access marked as unlocked locally. The actual purchase will run through StoreKit on the live build.");
+  closePaywall();
+  alert("Lifetime access unlocked. (Live builds run this through StoreKit.)");
 }
 
-subscriptionCta?.addEventListener("click", purchaseLifetime);
+async function restorePurchases() {
+  const purchases = window.Capacitor?.Plugins?.Purchases;
+  if (purchases?.restorePurchases) {
+    try {
+      const customer = await purchases.restorePurchases();
+      const entitlements = customer?.customerInfo?.entitlements?.active || customer?.entitlements?.active || {};
+      const hasLifetime = Object.keys(entitlements).some((key) => key.toLowerCase().includes("lifetime") || entitlements[key]?.isActive);
+      if (hasLifetime) {
+        setSubscription({ lifetime: true, restoredAt: new Date().toISOString() });
+        renderSubscription();
+        closePaywall();
+        alert("Lifetime access restored. Welcome back!");
+        return;
+      }
+      alert("No previous purchase was found on this Apple ID.");
+      return;
+    } catch (error) {
+      alert(error?.message || "Restore failed. Please try again.");
+      return;
+    }
+  }
+  alert("Restore Purchases will run through StoreKit on the live App Store build.");
+}
+
+subscriptionCta?.addEventListener("click", () => purchaseLifetime());
+restorePurchasesButton?.addEventListener("click", restorePurchases);
+paywallBuyButton?.addEventListener("click", () => purchaseLifetime());
+paywallRestoreButton?.addEventListener("click", restorePurchases);
+paywallDismissButton?.addEventListener("click", () => closePaywall());
 
 captureInviteFromUrl();
 const remembered = localStorage.getItem(SESSION_KEY) === "true" && Boolean(getUser());
@@ -1312,6 +1394,7 @@ const previewScore = new URLSearchParams(window.location.search).get("score");
 if (previewScore !== null && !Number.isNaN(Number(previewScore))) selectScore(previewScore);
 setReminderUi(getReminderTime());
 if (getUser()) ensureTrialStarted();
+enforcePaywallOnLaunch();
 showScreen(initialScreen);
 updateScoreDial(selectedScore);
 hydrateUser();
