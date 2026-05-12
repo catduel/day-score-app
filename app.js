@@ -104,6 +104,7 @@ const ACTIVE_USER_KEY = "dayScoreActiveUser.v1";
 const SUBSCRIPTION_KEY = "dayScoreSubscription.v1";
 const TRIAL_DAYS = 7;
 const LIFETIME_PRICE = "$2.99";
+const IAP_PRODUCT_ID = "com.ismoztas.dayscore.lifetime";
 const backend = window.DayScoreBackend;
 
 let reminderTimer = null;
@@ -1328,56 +1329,127 @@ function enforcePaywallOnLaunch() {
   openPaywall("expired");
 }
 
+let iapReady = false;
+let iapProduct = null;
+
+function getCdv() {
+  return window.CdvPurchase;
+}
+
+function initializeIap() {
+  const Cdv = getCdv();
+  if (!Cdv) return;
+  if (iapReady) return;
+  try {
+    Cdv.store.verbosity = Cdv.LogLevel.WARNING;
+    Cdv.store.register([{
+      id: IAP_PRODUCT_ID,
+      type: Cdv.ProductType.NON_CONSUMABLE,
+      platform: Cdv.Platform.APPLE_APPSTORE
+    }]);
+
+    Cdv.store.when()
+      .productUpdated((product) => {
+        if (product.id === IAP_PRODUCT_ID) iapProduct = product;
+      })
+      .approved((transaction) => transaction.verify())
+      .verified((receipt) => {
+        receipt.finish();
+        setSubscription({ lifetime: true, purchasedAt: new Date().toISOString() });
+        renderSubscription();
+        closePaywall();
+      });
+
+    Cdv.store.error((err) => {
+      console.warn("CdvPurchase error", err);
+    });
+
+    Cdv.store.initialize([Cdv.Platform.APPLE_APPSTORE]).then(() => {
+      iapReady = true;
+      const product = Cdv.store.get(IAP_PRODUCT_ID, Cdv.Platform.APPLE_APPSTORE);
+      if (product) iapProduct = product;
+    }).catch((err) => console.warn("IAP init failed", err));
+  } catch (err) {
+    console.warn("IAP setup failed", err);
+  }
+}
+
+document.addEventListener("deviceready", initializeIap, false);
+if (window.cordova || window.CdvPurchase) initializeIap();
+setTimeout(initializeIap, 1500);
+
 async function purchaseLifetime() {
   if (isLifetimeUnlocked()) return;
-  const useStoreKit = window.Capacitor?.isNativePlatform?.() && window.Capacitor?.Plugins?.Purchases;
-  if (useStoreKit) {
+  const Cdv = getCdv();
+  const isNative = window.Capacitor?.isNativePlatform?.();
+
+  if (Cdv && isNative) {
     try {
-      const purchases = window.Capacitor.Plugins.Purchases;
-      const offering = await purchases.getOfferings?.();
-      const product = offering?.current?.lifetime || offering?.current?.availablePackages?.[0];
-      if (product) await purchases.purchasePackage({ aPackage: product });
-      setSubscription({ lifetime: true, purchasedAt: new Date().toISOString() });
-      renderSubscription();
-      closePaywall();
-      alert("Lifetime access unlocked. Thank you!");
+      initializeIap();
+      const product = Cdv.store.get(IAP_PRODUCT_ID, Cdv.Platform.APPLE_APPSTORE) || iapProduct;
+      if (!product) {
+        alert("Loading the store… please try again in a moment.");
+        return;
+      }
+      const offer = product.getOffer?.() || product.offers?.[0];
+      if (!offer) {
+        alert("This product is not available right now.");
+        return;
+      }
+      const result = await Cdv.store.order(offer);
+      if (result && result.isError) {
+        if (result.code === Cdv.ErrorCode.PAYMENT_CANCELLED) return;
+        alert(result.message || "Purchase failed. Please try again.");
+      }
       return;
     } catch (error) {
-      if (error?.userCancelled) return;
+      console.warn("Purchase error", error);
       alert(error?.message || "Purchase failed. Please try again.");
       return;
     }
   }
-  const confirmed = confirm(`Unlock lifetime access for ${LIFETIME_PRICE}? In-app purchase will be processed once App Store billing is connected.`);
-  if (!confirmed) return;
-  setSubscription({ lifetime: true, purchasedAt: new Date().toISOString(), pendingStoreKit: true });
-  renderSubscription();
-  closePaywall();
-  alert("Lifetime access unlocked. (Live builds run this through StoreKit.)");
+
+  if (!isNative) {
+    alert("In-app purchases run through StoreKit on the installed iOS app.");
+    return;
+  }
+
+  alert("The store is still loading. Please try again in a few seconds.");
 }
 
 async function restorePurchases() {
-  const purchases = window.Capacitor?.Plugins?.Purchases;
-  if (purchases?.restorePurchases) {
+  const Cdv = getCdv();
+  const isNative = window.Capacitor?.isNativePlatform?.();
+
+  if (Cdv && isNative) {
     try {
-      const customer = await purchases.restorePurchases();
-      const entitlements = customer?.customerInfo?.entitlements?.active || customer?.entitlements?.active || {};
-      const hasLifetime = Object.keys(entitlements).some((key) => key.toLowerCase().includes("lifetime") || entitlements[key]?.isActive);
-      if (hasLifetime) {
-        setSubscription({ lifetime: true, restoredAt: new Date().toISOString() });
-        renderSubscription();
-        closePaywall();
-        alert("Lifetime access restored. Welcome back!");
-        return;
-      }
-      alert("No previous purchase was found on this Apple ID.");
+      initializeIap();
+      await Cdv.store.restorePurchases();
+      setTimeout(() => {
+        const product = Cdv.store.get(IAP_PRODUCT_ID, Cdv.Platform.APPLE_APPSTORE);
+        if (product && product.owned) {
+          setSubscription({ lifetime: true, restoredAt: new Date().toISOString() });
+          renderSubscription();
+          closePaywall();
+          alert("Lifetime access restored. Welcome back!");
+        } else {
+          alert("No previous purchase was found on this Apple ID.");
+        }
+      }, 1500);
       return;
     } catch (error) {
+      console.warn("Restore error", error);
       alert(error?.message || "Restore failed. Please try again.");
       return;
     }
   }
-  alert("Restore Purchases will run through StoreKit on the live App Store build.");
+
+  if (!isNative) {
+    alert("Restore Purchases runs through StoreKit on the installed iOS app.");
+    return;
+  }
+
+  alert("The store is still loading. Please try again in a few seconds.");
 }
 
 subscriptionCta?.addEventListener("click", () => purchaseLifetime());
