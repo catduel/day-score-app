@@ -241,6 +241,15 @@
     return group ? { id: group.id, name: group.name, inviteCode: group.invite_code, invites: [] } : null;
   }
 
+  async function deleteAccount() {
+    if (!currentUserId()) throw new Error("Not authenticated.");
+    await request("/rest/v1/rpc/delete_my_account", {
+      method: "POST",
+      body: JSON.stringify({})
+    });
+    localStorage.removeItem(SESSION_KEY);
+  }
+
   window.DayScoreBackend = {
     enabled: () => configured,
     getSession,
@@ -256,6 +265,7 @@
     getGroups,
     getGroupLeaderboard,
     createGroup,
-    joinGroupByInvite
+    joinGroupByInvite,
+    deleteAccount
   };
 })();

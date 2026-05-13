@@ -1847,6 +1847,63 @@ input::placeholder, textarea::placeholder { color:#7f8daf; }
 @media (max-width: 1120px) {
   .showcase { grid-template-columns: repeat(2, minmax(250px, 1fr)); }
 }
+
+html.native-app,
+html.native-app body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #060b20;
+  overscroll-behavior: none;
+  position: fixed;
+  inset: 0;
+  margin: 0;
+}
+
+html.native-app .showcase {
+  display: block;
+  width: 100%;
+  min-height: 100dvh;
+  padding: 0;
+}
+
+html.native-app .phone {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: max(16px, env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom));
+}
+
+html.native-app .phone.is-current { display: block; }
+
+html.native-app .phone.app { padding-bottom: calc(108px + env(safe-area-inset-bottom)); }
+
+html.native-app .nav {
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  bottom: calc(10px + env(safe-area-inset-bottom));
+}
+
+html.native-app .home .quote { bottom: calc(82px + env(safe-area-inset-bottom)); }
+html.native-app .friends { bottom: calc(128px + env(safe-area-inset-bottom)); }
+html.native-app .groups-art { bottom: calc(64px + env(safe-area-inset-bottom)); }
+html.native-app .rating .horizon { bottom: calc(70px + env(safe-area-inset-bottom)); }
+html.native-app .profile { padding-bottom: calc(140px + env(safe-area-inset-bottom)); }
+html.native-app .analytics { padding-bottom: calc(140px + env(safe-area-inset-bottom)); }
+html.native-app .groups { padding-bottom: calc(132px + env(safe-area-inset-bottom)); }
+html.native-app .how { display: none; }
 @media (max-width: 640px) {
   html,
   body {

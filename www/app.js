@@ -1067,22 +1067,45 @@ logoutButton?.addEventListener("click", async () => {
   showScreen("welcome");
 });
 
-deleteAccountButton?.addEventListener("click", () => {
-  const confirmed = confirm("Delete account? This clears this device now. Full Supabase account deletion will be connected with a secure Edge Function before App Store submission.");
-  if (!confirmed) return;
-  clearLocalSession();
-  localStorage.removeItem(USER_KEY);
-  localStorage.removeItem(SCORES_KEY);
-  localStorage.removeItem(GROUPS_KEY);
-  localStorage.removeItem(SUBSCRIPTION_KEY);
-  localStorage.removeItem(REMINDER_KEY);
-  hydrateUser();
-  updateDateUi();
-  renderGroups();
-  updateProfile();
-  renderSubscription();
-  alert("Local account data cleared. Next we will connect permanent Supabase account deletion.");
-  showScreen("welcome");
+deleteAccountButton?.addEventListener("click", async () => {
+  const first = confirm("Delete your account?\n\nThis permanently removes your profile, every saved score, your groups, and all shared data. This action cannot be undone.");
+  if (!first) return;
+  const second = confirm("Are you absolutely sure?\n\nTap OK to permanently delete your account now.");
+  if (!second) return;
+
+  const release = lockButton(deleteAccountButton, "Deleting...");
+  try {
+    if (backendEnabled() && backend.deleteAccount) {
+      try {
+        await backend.deleteAccount();
+      } catch (error) {
+        const message = String(error?.message || "");
+        if (message.toLowerCase().includes("function") && message.toLowerCase().includes("does not exist")) {
+          alert("Account deletion is being prepared on the server. Please email is.oztas@hotmail.com so we can complete it for you.");
+          return;
+        }
+        alert(message || "Account deletion failed. Please try again or email is.oztas@hotmail.com.");
+        return;
+      }
+    }
+    clearLocalSession();
+    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(SCORES_KEY);
+    localStorage.removeItem(GROUPS_KEY);
+    localStorage.removeItem(SUBSCRIPTION_KEY);
+    localStorage.removeItem(REMINDER_KEY);
+    localStorage.removeItem(PENDING_INVITE_KEY);
+    localStorage.removeItem(ACTIVE_USER_KEY);
+    hydrateUser();
+    updateDateUi();
+    renderGroups();
+    updateProfile();
+    renderSubscription();
+    alert("Your account and all data have been permanently deleted.");
+    showScreen("welcome");
+  } finally {
+    release();
+  }
 });
 
 signupButton?.addEventListener("click", async () => {
