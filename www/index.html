@@ -12,6 +12,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
+    <script>
+      (function () {
+        var ua = navigator.userAgent || "";
+        var isCapacitor = !!(window.Capacitor && (window.Capacitor.isNativePlatform ? window.Capacitor.isNativePlatform() : window.Capacitor.platform !== "web"));
+        var isWebView = /\b(?:capacitor|cordova)\b/i.test(ua);
+        var isStandalone = window.matchMedia && window.matchMedia("(display-mode: standalone)").matches;
+        var isIPad = /iPad/i.test(ua) || (ua.includes("Macintosh") && navigator.maxTouchPoints > 1);
+        if (isCapacitor || isWebView || isStandalone || isIPad) {
+          document.documentElement.classList.add("native-app");
+        }
+      })();
+    </script>
   </head>
   <body>
     <main class="showcase" aria-label="What's Your Day Score high fidelity mobile app mockup">
