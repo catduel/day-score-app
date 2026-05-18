@@ -32,83 +32,83 @@
         <div class="intro-title">
           <div class="app-icon image-icon logo-entry"><img src="./assets/logo-entry-crop.png" alt="" /></div>
           <div>
-            <h1>What's<br />Your Day<br />Score?</h1>
-            <p>Rate your day between 1-10 and see yourself and your friends.</p>
+            <h1 data-i18n="intro.title">What's<br />Your Day<br />Score?</h1>
+            <p data-i18n="intro.lead">Rate your day between 1-10 and see yourself and your friends.</p>
           </div>
         </div>
         <div class="feature-list">
-          <article><i class="ico bell"></i><div><strong>Daily Reminder</strong><p>Choose the time your day usually ends.</p></div></article>
-          <article><i class="ico people"></i><div><strong>Friends & Groups</strong><p>Create your own groups and share your scores.</p></div></article>
-          <article><i class="ico bars"></i><div><strong>Weekly Analytics</strong><p>Track your average score, trends and progress.</p></div></article>
-          <article><i class="ico lock"></i><div><strong>Private Sharing</strong><p>Share with selected friends or just yourself.</p></div></article>
+          <article><i class="ico bell"></i><div><strong data-i18n="intro.feat1.title">Daily Reminder</strong><p data-i18n="intro.feat1.body">Choose the time your day usually ends.</p></div></article>
+          <article><i class="ico people"></i><div><strong data-i18n="intro.feat2.title">Friends & Groups</strong><p data-i18n="intro.feat2.body">Create your own groups and share your scores.</p></div></article>
+          <article><i class="ico bars"></i><div><strong data-i18n="intro.feat3.title">Weekly Analytics</strong><p data-i18n="intro.feat3.body">Track your average score, trends and progress.</p></div></article>
+          <article><i class="ico lock"></i><div><strong data-i18n="intro.feat4.title">Private Sharing</strong><p data-i18n="intro.feat4.body">Share with selected friends or just yourself.</p></div></article>
         </div>
-        <div class="note">This is not a mood tracker. It's a complete score-based self-evaluation system.</div>
-        <small class="intro-signup">New here? <b data-screen="signup">Sign Up</b></small>
+        <div class="note" data-i18n="intro.note">This is not a mood tracker. It's a complete score-based self-evaluation system.</div>
+        <small class="intro-signup"><span data-i18n="intro.signupHint">New here?</span> <b data-screen="signup" data-i18n="auth.signup">Sign Up</b></small>
       </section>
 
       <section class="phone welcome" id="welcome">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
         <div class="meteor"></div>
-        <h2>What's<br />Your Day<br />Score?</h2>
-        <p>Give your day a score,<br />see your progress.</p>
+        <h2 data-i18n="welcome.title">What's<br />Your Day<br />Score?</h2>
+        <p data-i18n="welcome.lead">Give your day a score,<br />see your progress.</p>
         <img class="hero-art big" src="./assets/home-hero.jpg" alt="" />
-        <button class="btn primary" data-screen="intro">Let's Get Started</button>
-        <button class="btn ghost" data-screen="login">Log In</button>
+        <button class="btn primary" data-screen="intro" data-i18n="welcome.start">Let's Get Started</button>
+        <button class="btn ghost" data-screen="login" data-i18n="welcome.login">Log In</button>
       </section>
 
       <section class="phone auth" id="signup">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
-        <header class="top"><button data-screen="intro">&lt;</button><h3>Sign Up</h3></header>
+        <header class="top"><button data-screen="intro">&lt;</button><h3 data-i18n="auth.signup">Sign Up</h3></header>
         <div class="app-icon large image-icon balloon-icon"><img src="./assets/balloon-final.png" alt="" /></div>
         <form class="fields">
-          <label><i class="ico user"></i><input placeholder="Full Name" /></label>
-          <label><i class="ico mail"></i><input placeholder="Email" /></label>
-          <label><i class="ico lock small"></i><input type="password" placeholder="Password" /></label>
-          <label><i class="ico lock small"></i><input type="password" placeholder="Confirm Password" /></label>
+          <label><i class="ico user"></i><input data-i18n-placeholder="auth.fullName" placeholder="Full Name" /></label>
+          <label><i class="ico mail"></i><input data-i18n-placeholder="auth.email" placeholder="Email" /></label>
+          <label><i class="ico lock small"></i><input type="password" data-i18n-placeholder="auth.password" placeholder="Password" /></label>
+          <label><i class="ico lock small"></i><input type="password" data-i18n-placeholder="auth.confirmPassword" placeholder="Confirm Password" /></label>
         </form>
-        <button id="signupButton" class="btn primary" type="button">Sign Up</button>
-        <small>Already have an account? <b data-screen="login">Log In</b></small>
+        <button id="signupButton" class="btn primary" type="button" data-i18n="auth.signup">Sign Up</button>
+        <small><span data-i18n="auth.haveAccount">Already have an account?</span> <b data-screen="login" data-i18n="auth.login">Log In</b></small>
       </section>
 
       <section class="phone auth" id="login">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
-        <header class="top"><button data-screen="intro">&lt;</button><h3>Log In</h3></header>
+        <header class="top"><button data-screen="intro">&lt;</button><h3 data-i18n="auth.login">Log In</h3></header>
         <img class="door-art" src="./assets/login-door.jpg" alt="" />
         <form class="fields compact">
-          <label><i class="ico mail"></i><input placeholder="Email" /></label>
-          <label><i class="ico lock small"></i><input type="password" placeholder="Password" /></label>
+          <label><i class="ico mail"></i><input data-i18n-placeholder="auth.email" placeholder="Email" /></label>
+          <label><i class="ico lock small"></i><input type="password" data-i18n-placeholder="auth.password" placeholder="Password" /></label>
         </form>
-        <div class="form-row"><label><input id="rememberMe" type="checkbox" /> Remember me</label><a>Forgot password?</a></div>
-        <button id="loginButton" class="btn primary" type="button">Log In</button>
-        <small>Don't have an account? <b data-screen="signup">Sign Up</b></small>
+        <div class="form-row"><label><input id="rememberMe" type="checkbox" /> <span data-i18n="auth.rememberMe">Remember me</span></label><a data-i18n="auth.forgot">Forgot password?</a></div>
+        <button id="loginButton" class="btn primary" type="button" data-i18n="auth.login">Log In</button>
+        <small><span data-i18n="auth.noAccount">Don't have an account?</span> <b data-screen="signup" data-i18n="auth.signup">Sign Up</b></small>
       </section>
 
       <section class="phone app home" id="home">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
-        <header class="home-head"><div><h3>Hey, <span id="userName">there</span>!</h3><p>How was your day? Let's see your score.</p></div><button class="round avatar-btn" id="homeAvatar" data-screen="profile" type="button"><span id="homeAvatarInitial">U</span></button></header>
-        <button class="orb" data-screen="rating"><span>Today's Score</span><strong id="homeScore">--</strong><em>Tap to give<br />your score</em></button>
-        <article class="glass streak-card"><i></i><div><span>Current Streak</span><strong id="homeStreak">0 days</strong><small>Keep the chain alive</small></div></article>
+        <header class="home-head"><div><h3><span data-i18n="home.greeting">Hey,</span> <span id="userName">there</span>!</h3><p data-i18n="home.hint">How was your day? Let's see your score.</p></div><button class="round avatar-btn" id="homeAvatar" data-screen="profile" type="button"><span id="homeAvatarInitial">U</span></button></header>
+        <button class="orb" data-screen="rating"><span data-i18n="home.todaysScore">Today's Score</span><strong id="homeScore">--</strong><em data-i18n="home.tapToScore">Tap to give<br />your score</em></button>
+        <article class="glass streak-card"><i></i><div><span data-i18n="home.currentStreak">Current Streak</span><strong id="homeStreak">0 days</strong><small data-i18n="home.streakHint">Keep the chain alive</small></div></article>
         <img class="hero-art small" src="./assets/home-hero.jpg" alt="" />
-        <article class="glass friends"><div class="card-head"><strong>Friends</strong><a data-screen="groups">See All ></a></div><div id="homeFriendsList" class="empty-state">No friends yet.</div></article>
-        <article class="glass quote">Every day is a new chance to be better.</article>
+        <article class="glass friends"><div class="card-head"><strong data-i18n="home.friends">Friends</strong><a data-screen="groups" data-i18n="home.seeAll">See All ></a></div><div id="homeFriendsList" class="empty-state" data-i18n="home.noFriends">No friends yet.</div></article>
+        <article class="glass quote" data-i18n="home.quote">Every day is a new chance to be better.</article>
         <nav class="nav"><button class="active" data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
 
       <section class="phone app rating" id="rating">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
-        <div class="chip">End-of-day check-in<br /><small id="ratingReminderText">Score when your day is done.</small></div>
+        <div class="chip"><span data-i18n="rating.checkIn">End-of-day check-in</span><br /><small id="ratingReminderText" data-i18n="rating.scoreHint">Score when your day is done.</small></div>
         <div class="today-date" id="todayDate">Today</div>
-        <h3>What's your day score?</h3>
+        <h3 data-i18n="rating.question">What's your day score?</h3>
         <div class="wheel score-dial" id="scoreDial">
           <svg class="score-progress" viewBox="0 0 216 216" aria-hidden="true">
             <circle class="score-track" cx="108" cy="108" r="84" pathLength="100" />
             <circle class="score-fill" id="scoreFill" cx="108" cy="108" r="84" pathLength="100" />
           </svg>
           <button style="--a:-90deg" data-score="0">0</button><button style="--a:-57.3deg" data-score="1">1</button><button style="--a:-24.6deg" data-score="2">2</button><button style="--a:8.1deg" data-score="3">3</button><button style="--a:40.9deg" data-score="4">4</button><button style="--a:73.6deg" data-score="5">5</button><button style="--a:106.3deg" data-score="6">6</button><button style="--a:139.1deg" data-score="7">7</button><button style="--a:171.8deg" data-score="8">8</button><button style="--a:204.5deg" data-score="9">9</button><button class="selected" style="--a:237.3deg" data-score="10">10</button>
-          <div class="cloud"><img src="./assets/score-cloud.jpg" alt="" /><small>Select score</small></div>
+          <div class="cloud"><img src="./assets/score-cloud.jpg" alt="" /><small data-i18n="rating.selectScore">Select score</small></div>
         </div>
-        <label class="glass reason"><span>Why did you give this score? <small>(Max. 180 characters)</small></span><textarea id="reason" maxlength="180" placeholder="Give a short reason..."></textarea><em id="count">0/180</em></label>
-        <button class="btn primary" id="save">Save</button>
+        <label class="glass reason"><span><span data-i18n="rating.reasonLabel">Why did you give this score?</span> <small data-i18n="rating.reasonMax">(Max. 180 characters)</small></span><textarea id="reason" maxlength="180" data-i18n-placeholder="rating.reasonPlaceholder" placeholder="Give a short reason..."></textarea><em id="count">0/180</em></label>
+        <button class="btn primary" id="save" data-i18n="rating.save">Save</button>
         <div class="horizon"></div>
         <nav class="nav"><button data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus active" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
@@ -117,24 +117,24 @@
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
         <img class="score-display-art" src="./assets/score-display.jpg" alt="" />
         <div class="confetti"></div>
-        <h3>Great!</h3>
-        <p>Today's Score</p>
+        <h3 data-i18n="after.great">Great!</h3>
+        <p data-i18n="after.todaysScore">Today's Score</p>
         <div class="score-ring" id="finalScore">8</div>
-        <article class="glass result"><strong>Why did you give this score?</strong><p id="finalReason">It was a productive and energetic day. I completed important tasks and had time for myself.</p><em>132/180</em></article>
-        <article class="today"><h4>Friends' Scores Today</h4><div id="afterFriendsList" class="empty-state">No shared friend scores yet.</div></article>
-        <div class="share"><button class="btn gold" id="shareScoreButton" type="button">Share</button><button class="circle" id="boostScoreButton" type="button" aria-label="Boost a friend">^</button></div>
+        <article class="glass result"><strong data-i18n="after.whyScore">Why did you give this score?</strong><p id="finalReason">It was a productive and energetic day. I completed important tasks and had time for myself.</p><em>132/180</em></article>
+        <article class="today"><h4 data-i18n="after.friendsScores">Friends' Scores Today</h4><div id="afterFriendsList" class="empty-state" data-i18n="after.noFriendScores">No shared friend scores yet.</div></article>
+        <div class="share"><button class="btn gold" id="shareScoreButton" type="button" data-i18n="after.share">Share</button><button class="circle" id="boostScoreButton" type="button" aria-label="Boost a friend">^</button></div>
         <nav class="nav"><button data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
 
       <section class="phone app analytics" id="analytics">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
-        <header class="top"><button data-screen="home">&lt;</button><h3>Weekly Analytics</h3></header>
+        <header class="top"><button data-screen="home">&lt;</button><h3 data-i18n="analytics.title">Weekly Analytics</h3></header>
         <div class="date" id="analyticsDate">This Week</div>
-        <article class="glass chart"><img class="chart-bg" src="./assets/houses.jpg" alt="" /><span>Weekly Average</span><strong id="weeklyAverage">--</strong><svg viewBox="0 0 300 140"><g class="axis-labels"><text x="10" y="19">10</text><text x="16" y="66">5</text><text x="16" y="116">0</text></g><path d="M46 16H270M46 64H270M46 112H270" class="grid" /><path d="M46 16V112H270" class="axis" /><g id="scoreBars"></g><polyline id="scoreLine" points="" /><g id="scoreDots"></g></svg><div class="days" id="chartDays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div></article>
-        <div class="stats"><article><span>Highest Score</span><b id="highestScore">--</b><small id="highestDay">No data yet</small></article><article><span>Lowest Score</span><b id="lowestScore">--</b><small id="lowestDay">No data yet</small></article><article><span>All-time Avg</span><b id="overallAverage">--</b><small id="overallAverageNote">All days you scored</small></article><article><span>Days Scored</span><b id="daysScored">0</b></article></div>
-        <article class="glass calendar-card"><div class="card-head"><strong>Score Calendar</strong><a id="calendarMonth">This week</a></div><div class="score-calendar" id="scoreCalendar"></div></article>
-        <article class="glass reflection"><strong>Weekly Reflection</strong><p id="weeklyReflection">Score a few days to see your weekly reflection.</p></article>
-        <article class="glass archive" id="openArchiveButton"><div class="card-head"><strong>Score Archive</strong><a id="archiveCount">0 saved</a></div><div id="archiveList" class="archive-preview"><strong>Open calendar</strong><span>Tap to see every saved score.</span></div></article>
+        <article class="glass chart"><img class="chart-bg" src="./assets/houses.jpg" alt="" /><span data-i18n="analytics.weeklyAverage">Weekly Average</span><strong id="weeklyAverage">--</strong><svg viewBox="0 0 300 140"><g class="axis-labels"><text x="10" y="19">10</text><text x="16" y="66">5</text><text x="16" y="116">0</text></g><path d="M46 16H270M46 64H270M46 112H270" class="grid" /><path d="M46 16V112H270" class="axis" /><g id="scoreBars"></g><polyline id="scoreLine" points="" /><g id="scoreDots"></g></svg><div class="days" id="chartDays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div></article>
+        <div class="stats"><article><span data-i18n="analytics.highest">Highest Score</span><b id="highestScore">--</b><small id="highestDay" data-i18n="analytics.noData">No data yet</small></article><article><span data-i18n="analytics.lowest">Lowest Score</span><b id="lowestScore">--</b><small id="lowestDay" data-i18n="analytics.noData">No data yet</small></article><article><span data-i18n="analytics.allTimeAvg">All-time Avg</span><b id="overallAverage">--</b><small id="overallAverageNote" data-i18n="analytics.allDays">All days you scored</small></article><article><span data-i18n="analytics.daysScored">Days Scored</span><b id="daysScored">0</b></article></div>
+        <article class="glass calendar-card"><div class="card-head"><strong data-i18n="analytics.scoreCalendar">Score Calendar</strong><a id="calendarMonth">This week</a></div><div class="score-calendar" id="scoreCalendar"></div></article>
+        <article class="glass reflection"><strong data-i18n="analytics.weeklyReflection">Weekly Reflection</strong><p id="weeklyReflection" data-i18n="analytics.reflectionEmpty">Score a few days to see your weekly reflection.</p></article>
+        <article class="glass archive" id="openArchiveButton"><div class="card-head"><strong data-i18n="analytics.scoreArchive">Score Archive</strong><a id="archiveCount">0 saved</a></div><div id="archiveList" class="archive-preview"><strong data-i18n="analytics.openCalendar">Open calendar</strong><span data-i18n="analytics.archiveHint">Tap to see every saved score.</span></div></article>
         <div class="archive-modal" id="archiveModal" aria-hidden="true">
           <div class="archive-modal-card">
             <button class="modal-close" id="closeArchiveModal" type="button">x</button>
@@ -153,30 +153,30 @@
 
       <section class="phone app groups" id="groups">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
-        <header class="top"><button data-screen="home">&lt;</button><h3>Groups</h3><button id="createGroupShortcut">+</button></header>
+        <header class="top"><button data-screen="home">&lt;</button><h3 data-i18n="groups.title">Groups</h3><button id="createGroupShortcut">+</button></header>
         <article class="glass group-actions">
-          <label><span>Create Group</span><input id="groupName" placeholder="Group name" /></label>
-          <button class="btn gold" id="createGroupButton">Create</button>
-          <label><span>Invite Link</span><input id="inviteLink" placeholder="Create a group first" readonly /></label>
-          <button class="btn ghost compact-btn" id="inviteFriendButton">Share</button>
+          <label><span data-i18n="groups.createGroup">Create Group</span><input id="groupName" data-i18n-placeholder="groups.groupName" placeholder="Group name" /></label>
+          <button class="btn gold" id="createGroupButton" data-i18n="groups.create">Create</button>
+          <label><span data-i18n="groups.inviteLink">Invite Link</span><input id="inviteLink" data-i18n-placeholder="groups.inviteHint" placeholder="Create a group first" readonly /></label>
+          <button class="btn ghost compact-btn" id="inviteFriendButton" data-i18n="groups.share">Share</button>
         </article>
         <div class="group-list" id="groupList">
-          <article class="glass group empty-group"><div><strong>No groups yet</strong><small>Create your first private group.</small></div><p>Avg. Score <b>--</b></p></article>
+          <article class="glass group empty-group"><div><strong data-i18n="groups.noGroups">No groups yet</strong><small data-i18n="groups.noGroupsHint">Create your first private group.</small></div><p><span data-i18n="groups.avgScore">Avg. Score</span> <b>--</b></p></article>
         </div>
         <article class="glass rivalry-card social-command" id="rivalryCard">
           <i class="social-icon vs"></i>
-          <div><strong>Social Pulse</strong><p>Invite friends and compare today's score.</p></div>
+          <div><strong data-i18n="groups.socialPulse">Social Pulse</strong><p data-i18n="groups.socialPulseBody">Invite friends and compare today's score.</p></div>
           <b>VS</b>
         </article>
         <article class="glass weekly-board">
-          <div class="board-title"><i class="social-icon crown"></i><div><strong>Weekly Leaderboard</strong><small id="leaderboardCount">0 players</small></div></div>
+          <div class="board-title"><i class="social-icon crown"></i><div><strong data-i18n="groups.weeklyLeaderboard">Weekly Leaderboard</strong><small id="leaderboardCount">0 players</small></div></div>
           <ol class="mini-leaderboard" id="weeklyLeaderboard">
-            <li class="empty-state">Invite friends to unlock weekly competition.</li>
+            <li class="empty-state" data-i18n="groups.unlockLeaderboard">Invite friends to unlock weekly competition.</li>
           </ol>
         </article>
         <div class="social-tiles">
-          <article class="glass privacy"><i class="social-icon lock"></i><strong>Private</strong><span>Invite only</span></article>
-          <article class="glass friend-score" id="friendScorePanel"><i class="social-icon score"></i><strong>Friend Score</strong><span>No shared score</span></article>
+          <article class="glass privacy"><i class="social-icon lock"></i><strong data-i18n="groups.private">Private</strong><span data-i18n="groups.inviteOnly">Invite only</span></article>
+          <article class="glass friend-score" id="friendScorePanel"><i class="social-icon score"></i><strong data-i18n="groups.friendScore">Friend Score</strong><span data-i18n="groups.noSharedScore">No shared score</span></article>
         </div>
         <img class="groups-art" src="./assets/air-balloon.jpg" alt="" />
         <nav class="nav"><button data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button class="active" data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
@@ -193,32 +193,39 @@
 
       <section class="phone app profile" id="profile">
         <div class="status"><span>9:41</span><span>5G 100%</span></div>
-        <header class="top"><button data-screen="home">&lt;</button><h3>Profile</h3><button class="round avatar-btn" type="button"><span class="avatar-initial" id="profileTopInitial">U</span></button></header>
+        <header class="top"><button data-screen="home">&lt;</button><h3 data-i18n="profile.title">Profile</h3><button class="round avatar-btn" type="button"><span class="avatar-initial" id="profileTopInitial">U</span></button></header>
         <article class="glass profile-card">
           <label class="avatar" for="profilePhotoInput"><img id="profilePhoto" alt="" /><span id="profileInitial">U</span></label>
           <input id="profilePhotoInput" type="file" accept="image/*" hidden />
           <div><strong id="profileName">there</strong><span id="profileEmail">No email yet</span></div>
         </article>
         <div class="profile-stats">
-          <article><span>Average</span><b id="profileAverage">--</b></article>
-          <article><span>Scores</span><b id="profileScores">0</b></article>
-          <article><span>Streak</span><b id="profileStreak">0</b></article>
+          <article><span data-i18n="profile.average">Average</span><b id="profileAverage">--</b></article>
+          <article><span data-i18n="profile.scores">Scores</span><b id="profileScores">0</b></article>
+          <article><span data-i18n="profile.streak">Streak</span><b id="profileStreak">0</b></article>
         </div>
         <article class="glass profile-panel">
-          <strong>Account</strong>
-          <p>Your daily score archive, groups, and private sharing settings will live here.</p>
+          <strong data-i18n="profile.account">Account</strong>
+          <p data-i18n="profile.accountBody">Your daily score archive, groups, and private sharing settings will live here.</p>
         </article>
         <article class="glass profile-panel">
-          <strong>Privacy</strong>
-          <p>Scores stay private unless you share them with selected friends or groups.</p>
+          <strong data-i18n="profile.privacy">Privacy</strong>
+          <p data-i18n="profile.privacyBody">Scores stay private unless you share them with selected friends or groups.</p>
         </article>
         <article class="glass subscription-card" id="subscriptionCard">
-          <div><strong id="subscriptionTitle">7 days free trial</strong><p id="subscriptionCopy">After the trial, unlock lifetime access with a one-time $2.99 payment. No subscriptions, no renewals.</p><small id="subscriptionStatus">Trial active</small></div><button class="subscription-cta" id="subscriptionCta" type="button"><b>$2.99</b><span>One-time</span></button>
+          <div><strong id="subscriptionTitle">7 days free trial</strong><p id="subscriptionCopy">After the trial, unlock lifetime access with a one-time $2.99 payment. No subscriptions, no renewals.</p><small id="subscriptionStatus">Trial active</small></div><button class="subscription-cta" id="subscriptionCta" type="button"><b>$2.99</b><span data-i18n="sub.oneTime">One-time</span></button>
         </article>
-        <button class="restore-link" id="restorePurchasesButton" type="button">Restore Purchases</button>
+        <button class="restore-link" id="restorePurchasesButton" type="button" data-i18n="profile.restorePurchases">Restore Purchases</button>
+        <article class="glass profile-panel language-panel">
+          <strong data-i18n="profile.language">Language</strong>
+          <div class="lang-switch">
+            <button type="button" class="lang-btn" data-lang="en">English</button>
+            <button type="button" class="lang-btn" data-lang="tr">Türkçe</button>
+          </div>
+        </article>
         <div class="legal-links">
-          <button id="privacyPolicyButton">Privacy Policy</button>
-          <button id="termsButton">Terms of Use</button>
+          <button id="privacyPolicyButton" data-i18n="profile.privacyPolicy">Privacy Policy</button>
+          <button id="termsButton" data-i18n="profile.termsOfUse">Terms of Use</button>
         </div>
         <div class="legal-modal" id="legalModal" aria-hidden="true">
           <article class="legal-card">
@@ -228,13 +235,13 @@
           </article>
         </div>
         <article class="glass reminder-card">
-          <label><span>Reminder Time</span><input id="reminderTime" type="time" value="20:00" /></label>
-          <button class="btn gold reminder-btn" id="enableReminderButton">Enable Reminder</button>
+          <label><span data-i18n="profile.reminderTime">Reminder Time</span><input id="reminderTime" type="time" value="20:00" /></label>
+          <button class="btn gold reminder-btn" id="enableReminderButton" data-i18n="profile.enableReminder">Enable Reminder</button>
         </article>
-        <small class="reminder-status" id="reminderStatus">Reminder is off.</small>
+        <small class="reminder-status" id="reminderStatus" data-i18n="profile.reminderOff">Reminder is off.</small>
         <div class="account-actions">
-          <button class="btn ghost" id="logoutButton">Log Out</button>
-          <button class="delete-link" id="deleteAccountButton" type="button">Delete account</button>
+          <button class="btn ghost" id="logoutButton" data-i18n="profile.logout">Log Out</button>
+          <button class="delete-link" id="deleteAccountButton" type="button" data-i18n="profile.deleteAccount">Delete account</button>
         </div>
         <nav class="nav"><button data-screen="home"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button><button data-screen="groups"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.6 19c.6-3.2 3.3-5.4 6.4-5.4S15 15.8 15.6 19zM15.4 19c.4-1.9 1.6-3.5 3.3-4.3 2 .3 3.4 1.9 3.7 4.3z"/></svg>Groups</button><button class="plus" data-screen="rating">+</button><button data-screen="analytics"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1"/><rect x="10.3" y="9" width="3.4" height="11" rx="1"/><rect x="16.6" y="5" width="3.4" height="15" rx="1"/></svg>Analytics</button><button class="active" data-screen="profile"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.7-6 7.5-6s6.8 2.3 7.5 6z"/></svg>Profile</button></nav>
       </section>
@@ -256,8 +263,8 @@
           <strong id="paywallTitle">Your free trial has ended</strong>
           <p id="paywallCopy">Unlock lifetime access to keep scoring, see your trends, and stay in your friend groups. One-time $2.99 — no subscription, no auto-renewal.</p>
           <button class="btn primary" id="paywallBuyButton" type="button">Unlock for $2.99</button>
-          <button class="paywall-restore" id="paywallRestoreButton" type="button">Restore Purchase</button>
-          <button class="paywall-dismiss" id="paywallDismissButton" type="button">Maybe later</button>
+          <button class="paywall-restore" id="paywallRestoreButton" type="button" data-i18n="paywall.restore">Restore Purchase</button>
+          <button class="paywall-dismiss" id="paywallDismissButton" type="button" data-i18n="paywall.later">Maybe later</button>
         </div>
       </div>
     </main>
