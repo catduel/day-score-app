@@ -1758,6 +1758,30 @@ input::placeholder, textarea::placeholder { color:#7f8daf; }
   opacity:.85;
 }
 .delete-link:hover { opacity:1; }
+
+.language-panel { padding:12px; }
+.lang-switch {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:8px;
+}
+.lang-btn {
+  padding:10px 12px;
+  border:1px solid rgba(175,184,255,.2);
+  border-radius:12px;
+  background:rgba(255,255,255,.04);
+  color:#dfe5ff;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+.lang-btn.active {
+  background:linear-gradient(135deg,#fff09c,#ffae4f);
+  color:#241338;
+  border-color:transparent;
+  box-shadow:0 6px 16px rgba(255,196,91,.28);
+}
 .groups-art {
   position: absolute;
   left: 0;

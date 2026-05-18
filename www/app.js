@@ -102,9 +102,349 @@ const SESSION_KEY = "dayScoreRemember.v1";
 const PENDING_INVITE_KEY = "dayScorePendingInvite.v1";
 const ACTIVE_USER_KEY = "dayScoreActiveUser.v1";
 const SUBSCRIPTION_KEY = "dayScoreSubscription.v1";
+const LOCALE_KEY = "dayScoreLocale.v1";
 const TRIAL_DAYS = 7;
 const LIFETIME_PRICE = "$2.99";
 const IAP_PRODUCT_ID = "com.ismoztas.dayscore.lifetime";
+
+const I18N = {
+  en: {
+    "intro.title": "What's<br />Your Day<br />Score?",
+    "intro.lead": "Rate your day between 1-10 and see yourself and your friends.",
+    "intro.feat1.title": "Daily Reminder",
+    "intro.feat1.body": "Choose the time your day usually ends.",
+    "intro.feat2.title": "Friends & Groups",
+    "intro.feat2.body": "Create your own groups and share your scores.",
+    "intro.feat3.title": "Weekly Analytics",
+    "intro.feat3.body": "Track your average score, trends and progress.",
+    "intro.feat4.title": "Private Sharing",
+    "intro.feat4.body": "Share with selected friends or just yourself.",
+    "intro.note": "This is not a mood tracker. It's a complete score-based self-evaluation system.",
+    "intro.signupHint": "New here?",
+    "welcome.title": "What's<br />Your Day<br />Score?",
+    "welcome.lead": "Give your day a score,<br />see your progress.",
+    "welcome.start": "Let's Get Started",
+    "welcome.login": "Log In",
+    "auth.signup": "Sign Up",
+    "auth.login": "Log In",
+    "auth.fullName": "Full Name",
+    "auth.email": "Email",
+    "auth.password": "Password",
+    "auth.confirmPassword": "Confirm Password",
+    "auth.rememberMe": "Remember me",
+    "auth.forgot": "Forgot password?",
+    "auth.haveAccount": "Already have an account?",
+    "auth.noAccount": "Don't have an account?",
+    "home.greeting": "Hey,",
+    "home.hint": "How was your day? Let's see your score.",
+    "home.todaysScore": "Today's Score",
+    "home.tapToScore": "Tap to give<br />your score",
+    "home.currentStreak": "Current Streak",
+    "home.streakHint": "Keep the chain alive",
+    "home.friends": "Friends",
+    "home.seeAll": "See All >",
+    "home.noFriends": "No friends yet.",
+    "home.quote": "Every day is a new chance to be better.",
+    "rating.checkIn": "End-of-day check-in",
+    "rating.scoreHint": "Score when your day is done.",
+    "rating.question": "What's your day score?",
+    "rating.selectScore": "Select score",
+    "rating.reasonLabel": "Why did you give this score?",
+    "rating.reasonMax": "(Max. 180 characters)",
+    "rating.reasonPlaceholder": "Give a short reason...",
+    "rating.save": "Save",
+    "after.great": "Great!",
+    "after.todaysScore": "Today's Score",
+    "after.whyScore": "Why did you give this score?",
+    "after.friendsScores": "Friends' Scores Today",
+    "after.noFriendScores": "No shared friend scores yet.",
+    "after.share": "Share",
+    "analytics.title": "Weekly Analytics",
+    "analytics.weeklyAverage": "Weekly Average",
+    "analytics.highest": "Highest Score",
+    "analytics.lowest": "Lowest Score",
+    "analytics.allTimeAvg": "All-time Avg",
+    "analytics.daysScored": "Days Scored",
+    "analytics.scoreCalendar": "Score Calendar",
+    "analytics.weeklyReflection": "Weekly Reflection",
+    "analytics.reflectionEmpty": "Score a few days to see your weekly reflection.",
+    "analytics.scoreArchive": "Score Archive",
+    "analytics.openCalendar": "Open calendar",
+    "analytics.archiveHint": "Tap to see every saved score.",
+    "analytics.noData": "No data yet",
+    "analytics.allDays": "All days you scored",
+    "groups.title": "Groups",
+    "groups.createGroup": "Create Group",
+    "groups.groupName": "Group name",
+    "groups.create": "Create",
+    "groups.inviteLink": "Invite Link",
+    "groups.inviteHint": "Create a group first",
+    "groups.share": "Share",
+    "groups.noGroups": "No groups yet",
+    "groups.noGroupsHint": "Create your first private group.",
+    "groups.avgScore": "Avg. Score",
+    "groups.socialPulse": "Social Pulse",
+    "groups.socialPulseBody": "Invite friends and compare today's score.",
+    "groups.weeklyLeaderboard": "Weekly Leaderboard",
+    "groups.players": "players",
+    "groups.unlockLeaderboard": "Invite friends to unlock weekly competition.",
+    "groups.private": "Private",
+    "groups.inviteOnly": "Invite only",
+    "groups.friendScore": "Friend Score",
+    "groups.noSharedScore": "No shared score",
+    "groups.activeGroup": "Active group",
+    "groups.topToday": "Top Today",
+    "groups.inviteCode": "Invite code:",
+    "groups.noSharedScores": "No shared scores today",
+    "profile.title": "Profile",
+    "profile.average": "Average",
+    "profile.scores": "Scores",
+    "profile.streak": "Streak",
+    "profile.account": "Account",
+    "profile.accountBody": "Your daily score archive, groups, and private sharing settings will live here.",
+    "profile.privacy": "Privacy",
+    "profile.privacyBody": "Scores stay private unless you share them with selected friends or groups.",
+    "profile.privacyPolicy": "Privacy Policy",
+    "profile.termsOfUse": "Terms of Use",
+    "profile.reminderTime": "Reminder Time",
+    "profile.enableReminder": "Enable Reminder",
+    "profile.reminderOff": "Reminder is off.",
+    "profile.logout": "Log Out",
+    "profile.deleteAccount": "Delete account",
+    "profile.restorePurchases": "Restore Purchases",
+    "profile.language": "Language",
+    "sub.trialActive": "Trial active",
+    "sub.trialExpired": "Trial expired",
+    "sub.paid": "Paid",
+    "sub.lifetimeUnlocked": "Lifetime unlocked",
+    "sub.lifetimeBody": "Thanks for supporting My Day Point. All features are unlocked forever.",
+    "sub.trialOverBody": "Unlock lifetime access with a one-time {price} payment. No subscriptions, no renewals.",
+    "sub.trialBody": "After the 7-day trial, unlock lifetime access with a one-time {price} payment. No subscriptions, no renewals.",
+    "sub.trialLeft": "{n} day{s} of trial left",
+    "sub.trialEnded": "Trial ended",
+    "sub.oneTime": "One-time",
+    "sub.active": "Active",
+    "paywall.title": "Your free trial has ended",
+    "paywall.body": "To keep saving daily scores and using friend groups, unlock lifetime access. One-time {price} — no subscription, no auto-renewal.",
+    "paywall.unlock": "Unlock for {price}",
+    "paywall.restore": "Restore Purchase",
+    "paywall.later": "Maybe later",
+    "common.alreadyScored": "You already scored today. You can score again tomorrow.",
+    "common.alreadyInGroup": "You are already in this group.",
+    "common.joinedGroup": "You joined the group.",
+    "common.createGroupFirst": "Create a group first.",
+    "common.writeGroupName": "Write a group name first.",
+    "common.inviteCopied": "Invite link copied.",
+    "common.notSupported": "Notifications are not supported in this browser.",
+    "common.permissionDenied": "Reminder permission was not allowed.",
+    "common.reminderOn": "Reminder is on for {time}.",
+    "common.lifetimeRestored": "Lifetime access restored. Welcome back!",
+    "common.noPurchaseFound": "No previous purchase was found on this Apple ID.",
+    "common.loadingStore": "Loading the store… please try again in a moment.",
+    "common.purchaseFailed": "Purchase failed. Please try again.",
+    "common.deleteConfirm1": "Delete your account?\n\nThis permanently removes your profile, every saved score, your groups, and all shared data. This action cannot be undone.",
+    "common.deleteConfirm2": "Are you absolutely sure?\n\nTap OK to permanently delete your account now.",
+    "common.deleted": "Your account and all data have been permanently deleted.",
+    "common.emailPasswordRequired": "Email and password are required.",
+    "common.createAccountFirst": "Create an account first.",
+    "common.wrongCreds": "Email or password is incorrect.",
+    "common.signingIn": "Signing in...",
+    "common.creatingAccount": "Creating account...",
+    "common.creating": "Creating...",
+    "common.deleting": "Deleting..."
+  },
+  tr: {
+    "intro.title": "Gününe<br />Kaç Puan<br />Veriyorsun?",
+    "intro.lead": "Gününe 1-10 arası puan ver, kendini ve arkadaşlarını gör.",
+    "intro.feat1.title": "Günlük Hatırlatıcı",
+    "intro.feat1.body": "Gününün bittiği saati sen seç.",
+    "intro.feat2.title": "Arkadaşlar ve Gruplar",
+    "intro.feat2.body": "Kendi grubunu kur, puanlarını paylaş.",
+    "intro.feat3.title": "Haftalık Analiz",
+    "intro.feat3.body": "Ortalama puanını, trendlerini ve gelişimini takip et.",
+    "intro.feat4.title": "Özel Paylaşım",
+    "intro.feat4.body": "Seçtiğin arkadaşlarla paylaş veya sadece kendine sakla.",
+    "intro.note": "Bu bir mood tracker değil. Tamamen puan tabanlı bir öz-değerlendirme sistemi.",
+    "intro.signupHint": "Yeni misin?",
+    "welcome.title": "Gününe<br />Kaç Puan<br />Veriyorsun?",
+    "welcome.lead": "Gününe bir puan ver,<br />gelişimini gör.",
+    "welcome.start": "Hadi Başlayalım",
+    "welcome.login": "Giriş Yap",
+    "auth.signup": "Üye Ol",
+    "auth.login": "Giriş Yap",
+    "auth.fullName": "Ad Soyad",
+    "auth.email": "E-posta",
+    "auth.password": "Şifre",
+    "auth.confirmPassword": "Şifreyi Onayla",
+    "auth.rememberMe": "Beni hatırla",
+    "auth.forgot": "Şifremi unuttum",
+    "auth.haveAccount": "Zaten hesabın var mı?",
+    "auth.noAccount": "Hesabın yok mu?",
+    "home.greeting": "Selam,",
+    "home.hint": "Günün nasıldı? Puanını verelim.",
+    "home.todaysScore": "Bugünkü Puan",
+    "home.tapToScore": "Puan vermek için<br />dokun",
+    "home.currentStreak": "Aktif Seri",
+    "home.streakHint": "Zinciri devam ettir",
+    "home.friends": "Arkadaşlar",
+    "home.seeAll": "Tümünü Gör >",
+    "home.noFriends": "Henüz arkadaş yok.",
+    "home.quote": "Her gün daha iyisi için yeni bir fırsat.",
+    "rating.checkIn": "Gün sonu değerlendirme",
+    "rating.scoreHint": "Gününü bitirince puanla.",
+    "rating.question": "Gününe kaç puan?",
+    "rating.selectScore": "Puanı seç",
+    "rating.reasonLabel": "Bu puanı neden verdin?",
+    "rating.reasonMax": "(En fazla 180 karakter)",
+    "rating.reasonPlaceholder": "Kısa bir sebep yaz...",
+    "rating.save": "Kaydet",
+    "after.great": "Harika!",
+    "after.todaysScore": "Bugünkü Puan",
+    "after.whyScore": "Bu puanı neden verdin?",
+    "after.friendsScores": "Arkadaşların Bugünkü Puanları",
+    "after.noFriendScores": "Henüz paylaşılan arkadaş puanı yok.",
+    "after.share": "Paylaş",
+    "analytics.title": "Haftalık Analiz",
+    "analytics.weeklyAverage": "Haftalık Ortalama",
+    "analytics.highest": "En Yüksek",
+    "analytics.lowest": "En Düşük",
+    "analytics.allTimeAvg": "Tüm Zaman Ort.",
+    "analytics.daysScored": "Puanlanan Gün",
+    "analytics.scoreCalendar": "Puan Takvimi",
+    "analytics.weeklyReflection": "Haftalık Değerlendirme",
+    "analytics.reflectionEmpty": "Haftalık özet için birkaç gün puanla.",
+    "analytics.scoreArchive": "Puan Arşivi",
+    "analytics.openCalendar": "Takvimi aç",
+    "analytics.archiveHint": "Tüm kayıtlı puanlar için dokun.",
+    "analytics.noData": "Veri yok",
+    "analytics.allDays": "Puanladığın tüm günler",
+    "groups.title": "Gruplar",
+    "groups.createGroup": "Grup Oluştur",
+    "groups.groupName": "Grup adı",
+    "groups.create": "Oluştur",
+    "groups.inviteLink": "Davet Linki",
+    "groups.inviteHint": "Önce bir grup oluştur",
+    "groups.share": "Paylaş",
+    "groups.noGroups": "Henüz grup yok",
+    "groups.noGroupsHint": "İlk özel grubunu oluştur.",
+    "groups.avgScore": "Ort. Puan",
+    "groups.socialPulse": "Sosyal Nabız",
+    "groups.socialPulseBody": "Arkadaş davet et, bugünkü puanları karşılaştır.",
+    "groups.weeklyLeaderboard": "Haftalık Lider Tablosu",
+    "groups.players": "oyuncu",
+    "groups.unlockLeaderboard": "Haftalık yarış için arkadaş davet et.",
+    "groups.private": "Özel",
+    "groups.inviteOnly": "Sadece davet",
+    "groups.friendScore": "Arkadaş Puanı",
+    "groups.noSharedScore": "Paylaşılan puan yok",
+    "groups.activeGroup": "Aktif grup",
+    "groups.topToday": "Günün En'i",
+    "groups.inviteCode": "Davet kodu:",
+    "groups.noSharedScores": "Bugün paylaşılan puan yok",
+    "profile.title": "Profil",
+    "profile.average": "Ortalama",
+    "profile.scores": "Puan",
+    "profile.streak": "Seri",
+    "profile.account": "Hesap",
+    "profile.accountBody": "Günlük puan arşivin, grupların ve gizlilik ayarların burada.",
+    "profile.privacy": "Gizlilik",
+    "profile.privacyBody": "Puanların özeldir; sadece seçtiğin arkadaş veya gruplarla paylaşılır.",
+    "profile.privacyPolicy": "Gizlilik Politikası",
+    "profile.termsOfUse": "Kullanım Koşulları",
+    "profile.reminderTime": "Hatırlatma Saati",
+    "profile.enableReminder": "Hatırlatıcıyı Aç",
+    "profile.reminderOff": "Hatırlatıcı kapalı.",
+    "profile.logout": "Çıkış Yap",
+    "profile.deleteAccount": "Hesabı sil",
+    "profile.restorePurchases": "Satın Almayı Geri Yükle",
+    "profile.language": "Dil",
+    "sub.trialActive": "Deneme aktif",
+    "sub.trialExpired": "Deneme bitti",
+    "sub.paid": "Ödenmiş",
+    "sub.lifetimeUnlocked": "Ömür boyu erişim aktif",
+    "sub.lifetimeBody": "My Day Point'i desteklediğin için teşekkürler. Tüm özellikler süresiz açık.",
+    "sub.trialOverBody": "Tek seferlik {price} ödeyerek ömür boyu erişimi aç. Abonelik yok, yenileme yok.",
+    "sub.trialBody": "7 günlük denemeden sonra, tek seferlik {price} ile ömür boyu erişimi aç. Abonelik yok, yenileme yok.",
+    "sub.trialLeft": "Denemeden {n} gün kaldı",
+    "sub.trialEnded": "Deneme bitti",
+    "sub.oneTime": "Tek seferlik",
+    "sub.active": "Aktif",
+    "paywall.title": "Ücretsiz deneme süren bitti",
+    "paywall.body": "Puan kaydetmeye ve arkadaş gruplarını kullanmaya devam etmek için ömür boyu erişimi aç. Tek seferlik {price} — abonelik yok, otomatik yenileme yok.",
+    "paywall.unlock": "{price} ile aç",
+    "paywall.restore": "Satın Almayı Geri Yükle",
+    "paywall.later": "Belki sonra",
+    "common.alreadyScored": "Bugün zaten puanladın. Yarın tekrar puanlayabilirsin.",
+    "common.alreadyInGroup": "Zaten bu gruptasın.",
+    "common.joinedGroup": "Gruba katıldın.",
+    "common.createGroupFirst": "Önce bir grup oluştur.",
+    "common.writeGroupName": "Önce bir grup adı yaz.",
+    "common.inviteCopied": "Davet linki kopyalandı.",
+    "common.notSupported": "Bu tarayıcı bildirimleri desteklemiyor.",
+    "common.permissionDenied": "Bildirim izni verilmedi.",
+    "common.reminderOn": "Hatırlatıcı {time} için aktif.",
+    "common.lifetimeRestored": "Ömür boyu erişim geri yüklendi. Tekrar hoşgeldin!",
+    "common.noPurchaseFound": "Bu Apple ID'de önceki bir satın alma bulunamadı.",
+    "common.loadingStore": "Mağaza yükleniyor… lütfen biraz sonra tekrar dene.",
+    "common.purchaseFailed": "Satın alma başarısız. Lütfen tekrar dene.",
+    "common.deleteConfirm1": "Hesabını silmek istiyor musun?\n\nBu işlem profilini, kayıtlı tüm puanlarını, gruplarını ve paylaşılan tüm verilerini kalıcı olarak siler. Geri alınamaz.",
+    "common.deleteConfirm2": "Tamamen emin misin?\n\nHesabını şimdi kalıcı olarak silmek için Tamam'a bas.",
+    "common.deleted": "Hesabın ve tüm verilerin kalıcı olarak silindi.",
+    "common.emailPasswordRequired": "E-posta ve şifre gerekli.",
+    "common.createAccountFirst": "Önce hesap oluştur.",
+    "common.wrongCreds": "E-posta veya şifre hatalı.",
+    "common.signingIn": "Giriş yapılıyor...",
+    "common.creatingAccount": "Hesap oluşturuluyor...",
+    "common.creating": "Oluşturuluyor...",
+    "common.deleting": "Siliniyor..."
+  }
+};
+
+let currentLocale = (function () {
+  const saved = localStorage.getItem(LOCALE_KEY);
+  if (saved === "en" || saved === "tr") return saved;
+  const lang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+  return lang.startsWith("tr") ? "tr" : "en";
+})();
+
+function t(key, params) {
+  const dict = I18N[currentLocale] || I18N.en;
+  let str = dict[key] || I18N.en[key] || key;
+  if (params) {
+    Object.keys(params).forEach((k) => {
+      str = str.replace(new RegExp("\\{" + k + "\\}", "g"), params[k]);
+    });
+  }
+  return str;
+}
+
+function applyI18n() {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    el.innerHTML = t(el.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    el.placeholder = t(el.dataset.i18nPlaceholder);
+  });
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    el.setAttribute("aria-label", t(el.dataset.i18nAria));
+  });
+  document.documentElement.lang = currentLocale;
+}
+
+function setLocale(locale) {
+  if (locale !== "en" && locale !== "tr") return;
+  currentLocale = locale;
+  localStorage.setItem(LOCALE_KEY, locale);
+  applyI18n();
+  if (typeof renderSubscription === "function") renderSubscription();
+  if (typeof updateAnalytics === "function") updateAnalytics();
+  if (typeof renderGroups === "function") renderGroups();
+  if (typeof renderHomeFriends === "function") renderHomeFriends();
+  if (typeof updateDateUi === "function") updateDateUi();
+  if (typeof updateStreakUi === "function") updateStreakUi();
+  if (typeof setReminderUi === "function") setReminderUi(getReminderTime());
+  if (typeof hydrateUser === "function") hydrateUser();
+}
 const backend = window.DayScoreBackend;
 
 let reminderTimer = null;
@@ -250,7 +590,7 @@ async function consumePendingInvite() {
       setGroups([{ ...joinedGroup, members: [] }, ...currentGroups]);
       renderGroups();
     }
-    alert(joinedGroup?.alreadyMember ? "You are already in this group." : "You joined the group.");
+    alert(joinedGroup?.alreadyMember ? t("common.alreadyInGroup") : t("common.joinedGroup"));
     showScreen("groups");
     return true;
   } catch (error) {
@@ -258,7 +598,7 @@ async function consumePendingInvite() {
     if (message.includes("duplicate key") || message.includes("group_members_pkey")) {
       localStorage.removeItem(PENDING_INVITE_KEY);
       await syncBackendState();
-      alert("You are already in this group.");
+      alert(t("common.alreadyInGroup"));
       showScreen("groups");
       return true;
     }
@@ -369,10 +709,10 @@ save.addEventListener("click", () => {
     openPaywall("expired");
     return;
   }
-  const reason = reasonInput.value.trim() || "It was a productive and energetic day. I completed important tasks and had time for myself.";
+  const reason = reasonInput.value.trim();
   const scores = getScores();
   if (scores.some((entry) => dayKey(entry.at) === dayKey(new Date()))) {
-    alert("You already scored today. You can score again tomorrow.");
+    alert(t("common.alreadyScored"));
     return;
   }
   const entry = { score: selectedScore, reason, at: new Date().toISOString() };
@@ -429,7 +769,13 @@ function updateStreakUi() {
     streakCard.querySelector("span").textContent = milestone.label;
     streakCard.querySelector("small").textContent = milestone.message;
   }
-  if (homeStreak) homeStreak.textContent = `${streak} day${streak === 1 ? "" : "s"}`;
+  if (homeStreak) {
+    if (currentLocale === "tr") {
+      homeStreak.textContent = `${streak} gün`;
+    } else {
+      homeStreak.textContent = `${streak} day${streak === 1 ? "" : "s"}`;
+    }
+  }
   if (profileStreak) profileStreak.textContent = streak;
 }
 
@@ -730,7 +1076,7 @@ function renderHomeFriends() {
   const friends = getFriendBoard();
   if (!friends.length) {
     homeFriendsList.className = "empty-state";
-    homeFriendsList.innerHTML = "No friend scores yet.";
+    homeFriendsList.innerHTML = t("home.noFriends");
     return;
   }
   homeFriendsList.className = "friend-strip";
@@ -822,10 +1168,10 @@ async function createGroup() {
   }
   const name = groupNameInput?.value.trim();
   if (!name) {
-    alert("Write a group name first.");
+    alert(t("common.writeGroupName"));
     return;
   }
-  const release = lockButton(createGroupButton, "Creating...");
+  const release = lockButton(createGroupButton, t("common.creating"));
   try {
     if (backendEnabled()) {
       const created = await backend.createGroup(name);
@@ -857,7 +1203,7 @@ async function createGroup() {
 async function inviteFriend() {
   const groups = getGroups();
   if (!groups.length) {
-    alert("Create a group first.");
+    alert(t("common.createGroupFirst"));
     return;
   }
   const link = makeInviteLink(groups[0]);
@@ -865,7 +1211,7 @@ async function inviteFriend() {
     await navigator.share({ title: "Join my Day Score group", text: "Join my private Day Score group.", url: link });
   } else if (navigator.clipboard) {
     await navigator.clipboard.writeText(link);
-    alert("Invite link copied.");
+    alert(t("common.inviteCopied"));
   } else {
     alert(link);
   }
@@ -961,18 +1307,18 @@ async function enableReminder() {
   if (!("Notification" in window)) {
     localStorage.setItem(REMINDER_KEY, JSON.stringify({ enabled: true, time }));
     setReminderUi(time);
-    if (reminderStatus) reminderStatus.textContent = `Reminder saved for ${time}. You'll get the system push on the installed iOS app.`;
+    if (reminderStatus) reminderStatus.textContent = t("common.reminderOn", { time });
     return;
   }
   const permission = Notification.permission === "granted" ? "granted" : await Notification.requestPermission();
   if (permission !== "granted") {
-    if (reminderStatus) reminderStatus.textContent = "Reminder permission was not allowed.";
+    if (reminderStatus) reminderStatus.textContent = t("common.permissionDenied");
     return;
   }
   localStorage.setItem(REMINDER_KEY, JSON.stringify({ enabled: true, time }));
   setReminderUi(time);
   scheduleReminder();
-  if (reminderStatus) reminderStatus.textContent = `Reminder is on for ${time}.`;
+  if (reminderStatus) reminderStatus.textContent = t("common.reminderOn", { time });
 }
 
 enableReminderButton?.addEventListener("click", enableReminder);
@@ -1068,12 +1414,12 @@ logoutButton?.addEventListener("click", async () => {
 });
 
 deleteAccountButton?.addEventListener("click", async () => {
-  const first = confirm("Delete your account?\n\nThis permanently removes your profile, every saved score, your groups, and all shared data. This action cannot be undone.");
+  const first = confirm(t("common.deleteConfirm1"));
   if (!first) return;
-  const second = confirm("Are you absolutely sure?\n\nTap OK to permanently delete your account now.");
+  const second = confirm(t("common.deleteConfirm2"));
   if (!second) return;
 
-  const release = lockButton(deleteAccountButton, "Deleting...");
+  const release = lockButton(deleteAccountButton, t("common.deleting"));
   try {
     if (backendEnabled() && backend.deleteAccount) {
       try {
@@ -1101,7 +1447,7 @@ deleteAccountButton?.addEventListener("click", async () => {
     renderGroups();
     updateProfile();
     renderSubscription();
-    alert("Your account and all data have been permanently deleted.");
+    alert(t("common.deleted"));
     showScreen("welcome");
   } finally {
     release();
@@ -1117,7 +1463,7 @@ signupButton?.addEventListener("click", async () => {
     return;
   }
   if (backendEnabled()) {
-    const release = lockButton(signupButton, "Creating account...");
+    const release = lockButton(signupButton, t("common.creatingAccount"));
     try {
       const data = await backend.signUp({ name, email, password });
       const identities = data.user?.identities;
@@ -1174,10 +1520,10 @@ loginButton?.addEventListener("click", async () => {
   const password = getFieldValue("login", "Password");
   if (backendEnabled()) {
     if (!email || !password) {
-      alert("Email and password are required.");
+      alert(t("common.emailPasswordRequired"));
       return;
     }
-    const release = lockButton(loginButton, "Signing in...");
+    const release = lockButton(loginButton, t("common.signingIn"));
     try {
       const session = await backend.signIn({ email, password });
       const fullName = session.user?.user_metadata?.full_name || saved?.name || email.split("@")[0];
@@ -1195,12 +1541,12 @@ loginButton?.addEventListener("click", async () => {
     return;
   }
   if (!saved) {
-    alert("Create an account first.");
+    alert(t("common.createAccountFirst"));
     showScreen("signup");
     return;
   }
   if (email && password && (email !== saved.email || password !== saved.password)) {
-    alert("Email or password is incorrect.");
+    alert(t("common.wrongCreds"));
     return;
   }
   localStorage.setItem(SESSION_KEY, rememberMe?.checked ? "true" : "false");
@@ -1213,7 +1559,7 @@ function renderAfterFriends() {
   const friends = getFriendBoard();
   if (!friends.length) {
     afterFriendsList.className = "empty-state";
-    afterFriendsList.innerHTML = "No shared friend scores yet.";
+    afterFriendsList.innerHTML = t("after.noFriendScores");
     return;
   }
   afterFriendsList.className = "after-friends";
@@ -1292,29 +1638,33 @@ function renderSubscription() {
   const unlocked = Boolean(sub.lifetime);
   subscriptionCard.classList.toggle("unlocked", unlocked);
   if (unlocked) {
-    if (subscriptionTitle) subscriptionTitle.textContent = "Lifetime unlocked";
-    if (subscriptionCopy) subscriptionCopy.textContent = "Thanks for supporting My Day Point. All features are unlocked forever.";
-    if (subscriptionStatus) subscriptionStatus.textContent = "Paid";
+    if (subscriptionTitle) subscriptionTitle.textContent = t("sub.lifetimeUnlocked");
+    if (subscriptionCopy) subscriptionCopy.textContent = t("sub.lifetimeBody");
+    if (subscriptionStatus) subscriptionStatus.textContent = t("sub.paid");
     if (subscriptionCta) {
       subscriptionCta.disabled = true;
-      subscriptionCta.innerHTML = `<b>Active</b><span>Lifetime</span>`;
+      subscriptionCta.innerHTML = `<b>${t("sub.active")}</b><span>${t("sub.lifetimeUnlocked")}</span>`;
     }
     return;
   }
   const remaining = trialDaysRemaining();
   const trialOver = remaining <= 0;
-  if (subscriptionTitle) subscriptionTitle.textContent = trialOver ? "Trial ended" : `${remaining} day${remaining === 1 ? "" : "s"} of trial left`;
+  if (subscriptionTitle) {
+    subscriptionTitle.textContent = trialOver
+      ? t("sub.trialEnded")
+      : t("sub.trialLeft", { n: remaining, s: (remaining === 1 || currentLocale === "tr") ? "" : "s" });
+  }
   if (subscriptionCopy) {
     subscriptionCopy.textContent = trialOver
-      ? `Unlock lifetime access with a one-time ${LIFETIME_PRICE} payment. No subscriptions, no renewals.`
-      : `After the 7-day trial, unlock lifetime access with a one-time ${LIFETIME_PRICE} payment. No subscriptions, no renewals.`;
+      ? t("sub.trialOverBody", { price: LIFETIME_PRICE })
+      : t("sub.trialBody", { price: LIFETIME_PRICE });
   }
   if (subscriptionStatus) {
-    subscriptionStatus.textContent = trialOver ? "Trial expired" : "Trial active";
+    subscriptionStatus.textContent = trialOver ? t("sub.trialExpired") : t("sub.trialActive");
   }
   if (subscriptionCta) {
     subscriptionCta.disabled = false;
-    subscriptionCta.innerHTML = `<b>${LIFETIME_PRICE}</b><span>One-time</span>`;
+    subscriptionCta.innerHTML = `<b>${LIFETIME_PRICE}</b><span>${t("sub.oneTime")}</span>`;
   }
 }
 
@@ -1332,10 +1682,9 @@ function canUsePaidFeatures() {
 
 function openPaywall(reason) {
   if (!paywallModal) return;
-  if (paywallTitle) paywallTitle.textContent = reason === "expired" ? "Your free trial has ended" : "Unlock lifetime access";
-  if (paywallCopy) paywallCopy.textContent = reason === "expired"
-    ? `To keep saving daily scores and using friend groups, unlock lifetime access. One-time ${LIFETIME_PRICE} — no subscription, no auto-renewal.`
-    : `Get lifetime access to every feature for one payment. ${LIFETIME_PRICE} — no subscription, no auto-renewal.`;
+  if (paywallTitle) paywallTitle.textContent = t("paywall.title");
+  if (paywallCopy) paywallCopy.textContent = t("paywall.body", { price: LIFETIME_PRICE });
+  if (paywallBuyButton) paywallBuyButton.textContent = t("paywall.unlock", { price: LIFETIME_PRICE });
   paywallModal.classList.add("open");
   paywallModal.setAttribute("aria-hidden", "false");
 }
@@ -1411,7 +1760,7 @@ async function purchaseLifetime() {
       initializeIap();
       const product = Cdv.store.get(IAP_PRODUCT_ID, Cdv.Platform.APPLE_APPSTORE) || iapProduct;
       if (!product) {
-        alert("Loading the store… please try again in a moment.");
+        alert(t("common.loadingStore"));
         return;
       }
       const offer = product.getOffer?.() || product.offers?.[0];
@@ -1454,9 +1803,9 @@ async function restorePurchases() {
           setSubscription({ lifetime: true, restoredAt: new Date().toISOString() });
           renderSubscription();
           closePaywall();
-          alert("Lifetime access restored. Welcome back!");
+          alert(t("common.lifetimeRestored"));
         } else {
-          alert("No previous purchase was found on this Apple ID.");
+          alert(t("common.noPurchaseFound"));
         }
       }, 1500);
       return;
@@ -1487,6 +1836,14 @@ if (rememberMe) rememberMe.checked = remembered;
 const initialScreen = window.location.hash.replace("#", "") || (remembered ? "home" : (window.matchMedia("(max-width: 640px)").matches ? "welcome" : "intro"));
 const previewScore = new URLSearchParams(window.location.search).get("score");
 if (previewScore !== null && !Number.isNaN(Number(previewScore))) selectScore(previewScore);
+applyI18n();
+document.querySelectorAll(".lang-btn").forEach((btn) => {
+  btn.classList.toggle("active", btn.dataset.lang === currentLocale);
+  btn.addEventListener("click", () => {
+    setLocale(btn.dataset.lang);
+    document.querySelectorAll(".lang-btn").forEach((b) => b.classList.toggle("active", b.dataset.lang === currentLocale));
+  });
+});
 setReminderUi(getReminderTime());
 if (getUser()) ensureTrialStarted();
 enforcePaywallOnLaunch();
